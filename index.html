@@ -1,123 +1,318 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MSM SmartApps - Plataforma Inteligente Web-to-App</title>
+    <title>MSM SmartApps - Plataforma Web-to-App Inteligente</title>
     <link rel="manifest" href="manifest.json">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Meta Pixel Code (Gratis) -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', 'YOUR_PIXEL_ID');
+        fbq('track', 'PageView');
+    </script>
     <style>
-        /* Avatar Flotante 3D Mujer (Closer) */
-        .avatar-float-female {
-            width: 60px; height: 60px; border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #ec4899, #831843, #0f172a);
-            box-shadow: 0 0 20px rgba(236, 72, 153, 0.7);
-            animation: pulseOrb 2s infinite alternate;
-        }
-        /* Avatar Flotante Hombre (WhatsApp MSM) */
-        .avatar-float-male {
-            width: 60px; height: 60px; border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #22c55e, #14532d, #0f172a);
-            box-shadow: 0 0 20px rgba(34, 197, 94, 0.7);
-        }
-        @keyframes pulseOrb {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.08); }
-        }
+        .glow-green { box-shadow: 0 0 12px rgba(34, 197, 94, 0.6); }
+        .glow-blue { box-shadow: 0 0 12px rgba(59, 130, 246, 0.6); }
     </style>
 </head>
-<body class="bg-slate-900 text-white font-sans pb-24">
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col justify-between pb-20">
 
-    <!-- Header / Navbar Compacto -->
-    <header class="border-b border-slate-800 bg-slate-950/90 sticky top-0 z-40 px-4 py-3 flex flex-wrap justify-between items-center gap-2">
+    <!-- Header / Navbar Principal -->
+    <header class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur border-b border-slate-800 px-4 py-3 flex flex-wrap justify-between items-center gap-2">
         <div class="flex items-center space-x-2">
-            <i class="fa-solid fa-robot text-blue-500 text-xl"></i>
-            <span class="font-bold text-lg">MSM <span class="text-blue-500">SmartApps</span></span>
+            <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-white">M</div>
+            <div>
+                <span class="font-extrabold text-base tracking-wide text-white">MSM <span class="text-blue-500">SmartApps</span></span>
+                <span class="text-[10px] text-slate-400 block -mt-1">Móvil Social Marketing SAS</span>
+            </div>
         </div>
+        
         <div class="flex items-center space-x-2">
-            <select id="countrySelect" onchange="changeCountry()" class="bg-slate-800 border border-slate-700 text-xs rounded-lg p-1.5 text-white">
+            <!-- Disparador con Punto Verde Titilando (Efecto Venta) -->
+            <span class="flex items-center gap-1.5 text-[11px] bg-slate-800 border border-slate-700 px-2.5 py-1 rounded-full text-slate-300">
+                <span class="w-2 h-2 bg-green-500 rounded-full animate-ping"></span>
+                <span class="font-semibold text-green-400">Motor AI Conectado</span>
+            </span>
+
+            <select id="countrySelect" onchange="updateView()" class="bg-slate-800 border border-slate-700 text-xs rounded-lg p-1.5 text-white outline-none">
                 <option value="CO">🇨🇴 Colombia (COP)</option>
                 <option value="LATAM">🇲🇽 LatAm / México (USD)</option>
                 <option value="US">🇺🇸 EE.UU. / Europa (USD)</option>
             </select>
-            <select id="langSelect" class="bg-slate-800 border border-slate-700 text-xs rounded-lg p-1.5 text-white">
-                <option value="es">ES</option> <option value="en">EN</option> <option value="pt">PT</option>
+
+            <select id="langSelect" onchange="updateView()" class="bg-slate-800 border border-slate-700 text-xs rounded-lg p-1.5 text-white outline-none">
+                <option value="es">ES</option>
+                <option value="en">EN</option>
+                <option value="pt">PT</option>
             </select>
         </div>
     </header>
 
-    <main class="max-w-6xl mx-auto p-4 space-y-8">
-        <section class="text-center py-4 space-y-2">
-            <h1 class="text-2xl md:text-4xl font-extrabold">Convierte tu Negocio en una <span class="text-blue-500">App Inteligente</span></h1>
-            <p class="text-slate-400 text-xs md:text-sm">Automatiza tus ventas B2B y B2C con Agentes de IA y PWAs de Alta Conversión.</p>
+    <!-- Barra de Navegación por Pestañas (Evita Scroll Infinito) -->
+    <nav class="bg-slate-900/50 border-b border-slate-800 px-4 py-2 flex justify-around text-xs font-semibold">
+        <button onclick="switchTab('tabPlanes')" id="btnTabPlanes" class="text-blue-400 border-b-2 border-blue-500 pb-1">Planes & Soluciones</button>
+        <button onclick="switchTab('tabMetrics')" id="btnTabMetrics" class="text-slate-400 hover:text-white pb-1">Métricas & Analítica</button>
+        <button onclick="switchTab('tabAgentes')" id="btnTabAgentes" class="text-slate-400 hover:text-white pb-1">Equipo Agentes IA</button>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <main class="max-w-5xl mx-auto p-4 w-full space-y-6">
+
+        <!-- PESTAÑA 1: PLANES Y TIPOS COLAPSABLES -->
+        <section id="tabPlanes" class="space-y-4">
+            <div class="text-center space-y-1">
+                <h1 id="txtHeroTitle" class="text-xl md:text-3xl font-extrabold">Planes & Tipos de soluciones PWA</h1>
+                <p id="txtHeroSub" class="text-xs text-slate-400">Automatización total para convertir visitantes en clientes</p>
+            </div>
+
+            <div id="plansContainer" class="space-y-3">
+                <!-- Se puebla dinámicamente con las tarjetas desplegables -->
+            </div>
         </section>
 
-        <!-- Catalogo de los 5 Tipos -->
-        <section class="space-y-4">
-            <h2 class="text-xl font-bold text-center">Nuestros 5 Tipos de Soluciones</h2>
-            <div id="pricingGrid" class="grid md:grid-cols-3 gap-4"></div>
+        <!-- PESTAÑA 2: TABLERO DE MÉTRICAS INTERACTIVO -->
+        <section id="tabMetrics" class="hidden space-y-4">
+            <div class="flex justify-between items-center">
+                <h2 class="font-bold text-base text-white">Tablero de Analítica In-App</h2>
+                <button onclick="loadMetrics()" class="text-xs text-blue-400 bg-slate-800 px-2 py-1 rounded border border-slate-700"><i class="fa-solid fa-rotate mr-1"></i> Actualizar</button>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div onclick="openMetricDetail('installs')" class="bg-slate-900 border border-slate-800 p-3 rounded-xl text-center cursor-pointer hover:border-blue-500 transition">
+                    <p class="text-[10px] text-slate-400">Instalaciones PWA</p>
+                    <p class="text-xl font-bold text-blue-400">1,248</p>
+                    <span class="text-[9px] text-green-400">+18% este mes</span>
+                </div>
+                <div onclick="openMetricDetail('leads')" class="bg-slate-900 border border-slate-800 p-3 rounded-xl text-center cursor-pointer hover:border-blue-500 transition">
+                    <p class="text-[10px] text-slate-400">Leads Captados</p>
+                    <p class="text-xl font-bold text-green-400">342</p>
+                    <span class="text-[9px] text-green-400">+12% este mes</span>
+                </div>
+                <div onclick="openMetricDetail('voice')" class="bg-slate-900 border border-slate-800 p-3 rounded-xl text-center cursor-pointer hover:border-blue-500 transition">
+                    <p class="text-[10px] text-slate-400">Consultas de Voz</p>
+                    <p class="text-xl font-bold text-purple-400">3,890</p>
+                    <span class="text-[9px] text-green-400">+24% este mes</span>
+                </div>
+                <div onclick="openMetricDetail('conv')" class="bg-slate-900 border border-slate-800 p-3 rounded-xl text-center cursor-pointer hover:border-blue-500 transition">
+                    <p class="text-[10px] text-slate-400">Tasa Conversión</p>
+                    <p class="text-xl font-bold text-yellow-400">8.4%</p>
+                    <span class="text-[9px] text-green-400">Promedio LatAm</span>
+                </div>
+            </div>
+
+            <!-- Gráfico de Tendencia -->
+            <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl">
+                <h3 class="text-xs font-bold text-slate-300 mb-2">Tráfico & Conversión PWA (Últimos 30 días)</h3>
+                <div class="h-48">
+                    <canvas id="chartMetrics"></canvas>
+                </div>
+            </div>
         </section>
+
+        <!-- PESTAÑA 3: EQUIPO DE AGENTES EN ACCIÓN -->
+        <section id="tabAgentes" class="hidden space-y-4">
+            <h2 class="font-bold text-base text-white">Equipo de Agentes de Marketing (Python + IA)</h2>
+            <div class="space-y-3">
+                <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-magnifying-glass text-blue-500 text-lg"></i>
+                        <div>
+                            <p class="text-xs font-bold">Agente Scraper B2B (Python)</p>
+                            <p class="text-[10px] text-slate-400">Rastreando anuncios en Google Ads & LinkedIn</p>
+                        </div>
+                    </div>
+                    <span class="text-[10px] bg-green-500/10 text-green-400 border border-green-500/20 px-2 py-0.5 rounded-full">Activo</span>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-paper-plane text-purple-500 text-lg"></i>
+                        <div>
+                            <p class="text-xs font-bold">Agente Outreach Automatizado</p>
+                            <p class="text-[10px] text-slate-400">Enviando propuestas precargadas a prospectos</p>
+                        </div>
+                    </div>
+                    <span class="text-[10px] bg-green-500/10 text-green-400 border border-green-500/20 px-2 py-0.5 rounded-full">Ejecutando</span>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-user-check text-green-500 text-lg"></i>
+                        <div>
+                            <p class="text-xs font-bold">Agente Closer & Cualificador</p>
+                            <p class="text-[10px] text-slate-400">Entrevistando visitantes en la PWA y filtrando leads</p>
+                        </div>
+                    </div>
+                    <span class="text-[10px] bg-green-500/10 text-green-400 border border-green-500/20 px-2 py-0.5 rounded-full">En Vivo</span>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <!-- WIDGETS FLOTANTES DISRUPTIVOS -->
-    <div class="fixed bottom-4 right-4 z-50 flex flex-col items-center space-y-3">
-        <!-- Globo 1: Avatar Mujer (Agente de Voz Closer) -->
-        <button onclick="triggerFemaleVoice()" class="avatar-float-female flex items-center justify-center relative group">
-            <i class="fa-solid fa-headset text-white text-xl"></i>
-            <span class="absolute -top-8 bg-pink-600 text-[10px] px-2 py-0.5 rounded-full font-bold whitespace-nowrap">Closer IA</span>
+    <div class="fixed bottom-4 right-4 z-50 flex flex-col items-center space-y-2">
+        <!-- Widget 1: Asistente & Closer IA MSM -->
+        <button onclick="toggleCloserModal()" class="w-12 h-12 bg-gradient-to-r from-pink-600 to-purple-600 rounded-full flex items-center justify-center glow-blue transition transform hover:scale-110 relative">
+            <i class="fa-solid fa-robot text-white text-lg"></i>
+            <span class="absolute -top-6 bg-pink-600 text-[9px] px-2 py-0.5 rounded-full font-bold text-white shadow">Closer IA</span>
         </button>
 
-        <!-- Globo 2: WhatsApp Business Avatar Hombre -->
-        <a href="https://wa.me/573024894043?text=Hola,%20vengo%20desde%20la%20App%20de%20MSM%20SmartApps" target="_blank" class="avatar-float-male flex items-center justify-center relative">
+        <!-- Widget 2: WhatsApp Business Directo con Contexto -->
+        <a href="https://wa.me/573024894043?text=Hola,%20vengo%20desde%20la%20PWA%20de%20MSM%20SmartApps%20y%20me%20interesa%20cotizar%20un%20plan." target="_blank" class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center glow-green transition transform hover:scale-110 relative">
             <i class="fa-brands fa-whatsapp text-white text-2xl"></i>
-            <span class="absolute -top-8 bg-green-600 text-[10px] px-2 py-0.5 rounded-full font-bold whitespace-nowrap">Asistente MSM</span>
+            <span class="absolute -top-6 bg-green-600 text-[9px] px-2 py-0.5 rounded-full font-bold text-white shadow">WhatsApp</span>
         </a>
     </div>
 
-    <!-- Banner Legal: Habeas Data + SAGRILAFT -->
-    <div id="legalBanner" class="fixed bottom-0 inset-x-0 bg-slate-950/95 border-t border-slate-800 p-3 z-40 flex justify-between items-center text-[11px] text-slate-300">
-        <p>Acepto el tratamiento de datos (Ley 1581) y declaro el origen lícito de fondos (SAGRILAFT).</p>
-        <button onclick="document.getElementById('legalBanner').remove()" class="bg-blue-600 text-white font-bold px-3 py-1 rounded-lg">Aceptar</button>
+    <!-- Modal de Asistente Closer IA -->
+    <div id="closerModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 rounded-2xl p-5 max-w-sm w-full space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                <h3 class="font-bold text-sm text-pink-400 flex items-center gap-2"><i class="fa-solid fa-robot"></i> Asistente & Closer MSM</h3>
+                <button onclick="toggleCloserModal()" class="text-slate-400"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="text-xs text-slate-300 space-y-2">
+                <p class="bg-slate-800 p-2.5 rounded-lg border border-slate-700">"¡Hola! Soy el Asistente Comercial de MSM SmartApps. Resolvemos tus dudas de implementación PWA e IA. ¿Deseas activar la demo de 7 días para tu empresa?"</p>
+            </div>
+            <button onclick="speakCloser()" class="w-full bg-pink-600 hover:bg-pink-500 text-white font-bold py-2 rounded-xl text-xs flex items-center justify-center gap-2">
+                <i class="fa-solid fa-volume-high"></i> Escuchar Explicación de Valor
+            </button>
+        </div>
     </div>
 
-    <!-- Footer Oficial -->
-    <footer class="text-center text-xs text-slate-500 py-4 border-t border-slate-800 mt-12">
+    <!-- Modal de Pago DaviPlata (Colombia) -->
+    <div id="daviplataModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 rounded-2xl p-5 max-w-sm w-full space-y-4 text-center">
+            <h3 class="font-bold text-base text-green-400">Pago Directo en Colombia</h3>
+            <p class="text-xs text-slate-300">Transfiere sin comisiones a nuestra cuenta oficial:</p>
+            <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-1">
+                <p class="text-[10px] text-slate-400">Llave DaviPlata / Bre-B:</p>
+                <p class="text-base font-bold font-mono text-green-400">DAVI3024894043</p>
+                <p class="text-[10px] text-slate-400">Titular: Móvil Social Marketing SAS</p>
+            </div>
+            <button onclick="navigator.clipboard.writeText('DAVI3024894043'); alert('Llave copiada');" class="w-full bg-blue-600 text-xs font-bold py-2 rounded-xl">Copiar Llave</button>
+            <button onclick="document.getElementById('daviplataModal').classList.add('hidden')" class="w-full bg-slate-800 text-xs py-1.5 rounded-xl">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- Banner Legal: Habeas Data + SAGRILAFT -->
+    <div id="legalBanner" class="fixed bottom-0 inset-x-0 bg-slate-950/95 border-t border-slate-800 p-3 z-40 flex justify-between items-center text-[10px] text-slate-300">
+        <p>Acepto la Política de Datos Personales (Ley 1581) y declaro origen lícito de fondos (SAGRILAFT).</p>
+        <button onclick="document.getElementById('legalBanner').remove()" class="bg-blue-600 text-white font-bold px-3 py-1 rounded-lg text-[10px]">Aceptar</button>
+    </div>
+
+    <footer class="text-center text-[11px] text-slate-500 py-4 border-t border-slate-800">
         MSM SmartApps by Móvil Social Marketing SAS
     </footer>
 
     <script>
-        const pricingData = {
+        // Datos de Planes Traducidos y Adaptados por País
+        const dataPlans = {
             CO: [
-                { type: "Tipo 1: MSM Lite", setup: "450.000 COP", monthly: "40.000 COP/m", desc: "PWA + Avatar Mujer Closer" },
-                { type: "Tipo 2: MSM Growth", setup: "950.000 COP", monthly: "80.000 COP/m", desc: "Lite + Agentes Marketing Python" },
-                { type: "Tipo 3: MSM Enterprise", setup: "1.850.000 COP", monthly: "130.000 COP/m", desc: "Growth + Multilingüe + Precios País" },
-                { type: "Tipo 4: Social-to-App", setup: "600.000 COP", monthly: "50.000 COP/m", desc: "PWA para Negocios sin Web" },
-                { type: "Tipo 5: App Remake", setup: "1.200.000 COP", monthly: "100.000 COP/m", desc: "Migración de Apps Obsoletas a PWA IA" }
+                { id: 1, type: "Tipo 1: MSM Lite", setup: "$450.000 COP", monthly: "$40.000 COP/m", desc: "PWA Instalable + Asistente Closer IA + Captador Leads", paypal: "https://paypal.me/movilsocialmarketing/150" },
+                { id: 2, type: "Tipo 2: MSM Growth", setup: "$950.000 COP", monthly: "$80.000 COP/m", desc: "Lite + Agente Scraper/Outreach Python en Redes", paypal: "https://paypal.me/movilsocialmarketing/290" },
+                { id: 3, type: "Tipo 3: MSM Enterprise", setup: "$1.850.000 COP", monthly: "$130.000 COP/m", desc: "Growth + Multilingüe (ES/EN/PT) + Precios País", paypal: "https://paypal.me/movilsocialmarketing/490" },
+                { id: 4, type: "Tipo 4: Social-to-App", setup: "$600.000 COP", monthly: "$50.000 COP/m", desc: "Para Negocios sin Web (Conversión desde IG/FB/TikTok)", paypal: "https://paypal.me/movilsocialmarketing/190" },
+                { id: 5, type: "Tipo 5: App Remake", setup: "$1.200.000 COP", monthly: "$100.000 COP/m", desc: "Migración de Apps Obsoletas/Lentas a PWA IA High-Speed", paypal: "https://paypal.me/movilsocialmarketing/350" }
+            ],
+            LATAM: [
+                { id: 1, type: "Tipo 1: MSM Lite", setup: "$150 USD", monthly: "$15 USD/m", desc: "PWA Instalable + Asistente Closer IA", paypal: "https://paypal.me/movilsocialmarketing/150" },
+                { id: 2, type: "Tipo 2: MSM Growth", setup: "$290 USD", monthly: "$25 USD/m", desc: "Lite + Agente Scraper Python", paypal: "https://paypal.me/movilsocialmarketing/290" },
+                { id: 3, type: "Tipo 3: MSM Enterprise", setup: "$490 USD", monthly: "$45 USD/m", desc: "Growth + Multilingüe + Precios País", paypal: "https://paypal.me/movilsocialmarketing/490" },
+                { id: 4, type: "Tipo 4: Social-to-App", setup: "$190 USD", monthly: "$20 USD/m", desc: "PWA para Negocios sin Web", paypal: "https://paypal.me/movilsocialmarketing/190" },
+                { id: 5, type: "Tipo 5: App Remake", setup: "$350 USD", monthly: "$30 USD/m", desc: "Migración de Apps Obsoletas", paypal: "https://paypal.me/movilsocialmarketing/350" }
+            ],
+            US: [
+                { id: 1, type: "Tipo 1: MSM Lite", setup: "$350 USD", monthly: "$30 USD/m", desc: "PWA Instalable + Asistente Closer IA", paypal: "https://paypal.me/movilsocialmarketing/350" },
+                { id: 2, type: "Tipo 2: MSM Growth", setup: "$650 USD", monthly: "$50 USD/m", desc: "Lite + Agente Scraper Python", paypal: "https://paypal.me/movilsocialmarketing/650" },
+                { id: 3, type: "Tipo 3: MSM Enterprise", setup: "$990 USD", monthly: "$85 USD/m", desc: "Growth + Multilingüe + Precios País", paypal: "https://paypal.me/movilsocialmarketing/990" },
+                { id: 4, type: "Tipo 4: Social-to-App", setup: "$450 USD", monthly: "$35 USD/m", desc: "PWA para Negocios sin Web", paypal: "https://paypal.me/movilsocialmarketing/450" },
+                { id: 5, type: "Tipo 5: App Remake", setup: "$750 USD", monthly: "$60 USD/m", desc: "Migración de Apps Obsoletas", paypal: "https://paypal.me/movilsocialmarketing/750" }
             ]
         };
 
-        function changeCountry() {
-            const grid = document.getElementById("pricingGrid");
-            grid.innerHTML = pricingData.CO.map(p => `
-                <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl space-y-2">
-                    <h3 class="font-bold text-sm text-blue-400">${p.type}</h3>
-                    <p class="text-xs text-slate-300">${p.desc}</p>
-                    <p class="text-lg font-bold">${p.setup}</p>
-                    <p class="text-[10px] text-slate-400">Mant: ${p.monthly}</p>
-                    <button class="w-full bg-blue-600 hover:bg-blue-500 text-xs font-bold py-2 rounded-lg">Contratar Plan</button>
+        const i18n = {
+            es: { title: "Planes & Tipos de soluciones PWA", sub: "Automatización total para convertir visitantes en clientes" },
+            en: { title: "PWA Plans & Smart Solutions", sub: "Full automation to convert visitors into customers" },
+            pt: { title: "Planos e Soluções PWA Inteligentes", sub: "Automação total para converter visitantes em clientes" }
+        };
+
+        function switchTab(tabId) {
+            ['tabPlanes', 'tabMetrics', 'tabAgentes'].forEach(id => document.getElementById(id).classList.add('hidden'));
+            document.getElementById(tabId).classList.remove('hidden');
+            if(tabId === 'tabMetrics') initChart();
+        }
+
+        function updateView() {
+            const country = document.getElementById("countrySelect").value;
+            const lang = document.getElementById("langSelect").value;
+            
+            document.getElementById("txtHeroTitle").innerText = i18n[lang].title;
+            document.getElementById("txtHeroSub").innerText = i18n[lang].sub;
+
+            const container = document.getElementById("plansContainer");
+            const plans = dataPlans[country];
+
+            container.innerHTML = plans.map(p => `
+                <div class="bg-slate-900 border border-slate-800 rounded-xl p-3.5 space-y-2">
+                    <div class="flex justify-between items-center cursor-pointer" onclick="togglePlanDetail(${p.id})">
+                        <div>
+                            <h3 class="font-bold text-sm text-blue-400">${p.type}</h3>
+                            <p class="text-[11px] text-slate-400">${p.desc}</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="font-extrabold text-sm text-white">${p.setup}</span>
+                            <span class="text-[9px] block text-slate-400">${p.monthly}</span>
+                        </div>
+                    </div>
+                    <div id="planDetail-${p.id}" class="pt-2 border-t border-slate-800 flex gap-2">
+                        ${country === 'CO' 
+                            ? `<button onclick="document.getElementById('daviplataModal').classList.remove('hidden')" class="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-1.5 rounded-lg text-xs">Pagar con DaviPlata</button>`
+                            : `<a href="${p.paypal}" target="_blank" class="w-full text-center bg-blue-600 hover:bg-blue-500 text-white font-bold py-1.5 rounded-lg text-xs block">Pagar con PayPal</a>`
+                        }
+                    </div>
                 </div>
             `).join('');
         }
 
-        function triggerFemaleVoice() {
+        function toggleCloserModal() {
+            document.getElementById("closerModal").classList.toggle("hidden");
+        }
+
+        function speakCloser() {
             const synth = window.speechSynthesis;
-            const utter = new SpeechSynthesisUtterance("Hola, soy tu closer de ventas con Inteligencia Artificial. ¿Listo para escalar los ingresos de tu empresa?");
-            utter.lang = 'es-ES';
+            const utter = new SpeechSynthesisUtterance("En MSM SmartApps te entregamos una PWA de alta velocidad con agentes de inteligencia artificial listos para vender 24 horas al día. Activa tu plan hoy.");
+            utter.lang = document.getElementById("langSelect").value === 'en' ? 'en-US' : 'es-ES';
             synth.speak(utter);
         }
 
-        changeCountry();
+        function initChart() {
+            const ctx = document.getElementById('chartMetrics').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4'],
+                    datasets: [
+                        { label: 'Instalaciones', data: [200, 450, 800, 1248], borderColor: '#3b82f6', tension: 0.3 },
+                        { label: 'Leads Captados', data: [50, 120, 230, 342], borderColor: '#22c55e', tension: 0.3 }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#94a3b8', font: { size: 10 } } } } }
+            });
+        }
+
+        updateView();
     </script>
 </body>
 </html>
