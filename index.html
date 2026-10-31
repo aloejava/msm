@@ -9,6 +9,7 @@
       --bg-dark: #0a0f1d;
       --card-bg: #141c2e;
       --accent-blue: #0066ff;
+      --accent-green: #10b981;
       --text-main: #ffffff;
       --text-sub: #94a3b8;
       --border-color: #1e293b;
@@ -20,26 +21,120 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 20px;
+      padding-bottom: 90px; /* Espacio para no obstruir con controles flotantes */
     }
 
-    .msm-header-controls {
+    /* BARRA SUPERIOR E INDICADOR IA */
+    .msm-header {
       display: flex;
-      justify-content: flex-end;
-      gap: 12px;
-      margin-bottom: 25px;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto 20px auto;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .msm-status-ai {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      color: var(--accent-green);
+      font-weight: 600;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--accent-green);
+      border-radius: 50%;
+      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+      animation: pulse 1.6s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+      }
+      70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+      }
+      100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+      }
+    }
+
+    .msm-controls {
+      display: flex;
+      gap: 10px;
     }
 
     .msm-select {
       background-color: var(--card-bg);
       color: var(--text-main);
       border: 1px solid var(--border-color);
-      padding: 8px 14px;
+      padding: 8px 12px;
       border-radius: 8px;
-      font-size: 14px;
+      font-size: 13px;
       outline: none;
       cursor: pointer;
     }
 
+    /* TABLERO DE MÉTRICAS (ERP DASHBOARD INTEGRADO) */
+    .msm-dashboard {
+      max-width: 1200px;
+      margin: 0 auto 30px auto;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .msm-dashboard-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-top: 0;
+      margin-bottom: 15px;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .msm-metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .metric-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 15px;
+    }
+
+    .metric-value {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--accent-blue);
+    }
+
+    .metric-label {
+      font-size: 12px;
+      color: var(--text-sub);
+      margin-top: 4px;
+    }
+
+    /* GRILLA DE PLANES */
     .msm-plans-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -56,12 +151,6 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-
-    .msm-plan-card:hover {
-      border-color: var(--accent-blue);
-      transform: translateY(-3px);
     }
 
     .msm-plan-title {
@@ -77,23 +166,17 @@
       color: var(--text-sub);
       line-height: 1.5;
       margin-bottom: 20px;
-      flex-grow: 1;
-    }
-
-    .msm-price-box {
-      margin-bottom: 20px;
     }
 
     .msm-main-price {
       font-size: 24px;
       font-weight: 800;
-      color: var(--text-main);
     }
 
     .msm-sub-price {
       font-size: 13px;
       color: var(--text-sub);
-      margin-top: 4px;
+      margin-bottom: 15px;
     }
 
     .msm-btn-pay {
@@ -107,33 +190,84 @@
       border-radius: 8px;
       font-weight: 600;
       font-size: 15px;
-      transition: background-color 0.2s ease;
       box-sizing: border-box;
     }
 
-    .msm-btn-pay:hover {
-      background-color: #0052cc;
+    /* BOTÓN FLOTANTE DE WHATSAPP (CORREGIDO SIN SUPERPOSICIÓN) */
+    .msm-whatsapp-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #25d366;
+      color: white;
+      border-radius: 50px;
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      z-index: 999;
     }
   </style>
 </head>
 <body>
 
-  <!-- Controles Principales (País e Idioma) -->
-  <div class="msm-header-controls">
-    <select id="msm-country-select" class="msm-select" onchange="updateMsmAppView()">
-      <option value="COP">🇨🇴 Colombia (COP)</option>
-      <option value="USD" selected>🌐 Internacional (USD)</option>
-    </select>
+  <!-- CABECERA PRINCIPAL CON ESTADO TITILANTE -->
+  <div class="msm-header">
+    <div class="msm-status-ai">
+      <span class="pulse-dot"></span>
+      <span id="txt-ai-status">Motor AI Conectado</span>
+    </div>
 
-    <select id="msm-lang-select" class="msm-select" onchange="updateMsmAppView()">
-      <option value="ES">Español (ES)</option>
-      <option value="EN">English (EN)</option>
-      <option value="PT">Português (PT)</option>
-    </select>
+    <div class="msm-controls">
+      <select id="msm-country-select" class="msm-select" onchange="updateMsmAppView()">
+        <option value="COP">🇨🇴 Colombia (COP)</option>
+        <option value="USD" selected>🌐 Internacional (USD)</option>
+      </select>
+
+      <select id="msm-lang-select" class="msm-select" onchange="updateMsmAppView()">
+        <option value="ES">Español (ES)</option>
+        <option value="EN">English (EN)</option>
+        <option value="PT">Português (PT)</option>
+      </select>
+    </div>
   </div>
 
-  <!-- Grilla de Planes Reales -->
+  <!-- TABLERO DE MÉTRICAS (ERP EN TIEMPO REAL) -->
+  <div class="msm-dashboard">
+    <div class="msm-dashboard-title">
+      📊 <span id="txt-dash-title">Tablero Analítico MSM (Métricas en Vivo)</span>
+    </div>
+    <div class="msm-metrics-grid">
+      <div class="metric-card">
+        <div class="metric-value" id="val-leads">128</div>
+        <div class="metric-label" id="lbl-leads">Prospecciones Automáticas</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value" id="val-conv">94.2%</div>
+        <div class="metric-label" id="lbl-conv">Eficiencia AI Closer</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value" id="val-ads">$0.00</div>
+        <div class="metric-label" id="lbl-ads">Gasto en Ads (Meta/Google)</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value" id="val-mkt">5 Agentes</div>
+        <div class="metric-label" id="lbl-mkt">Equipo IA de Respaldo</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTAINER DE PLANES -->
   <div id="msm-plans-container" class="msm-plans-grid"></div>
+
+  <!-- BOTÓN WHATSAPP UBICADO LIMPIAMENTE -->
+  <a href="https://wa.me/" class="msm-whatsapp-float" target="_blank">
+    <span>WhatsApp MSM</span>
+  </a>
 
   <script>
     const msmPlansData = {
@@ -141,61 +275,36 @@
         buttonText: "Paga con PayPal",
         plans: [
           {
-            id: "type1",
             name: { ES: "Type 1: MSM SmartApps - Lite Plan", EN: "Type 1: MSM SmartApps - Lite Plan", PT: "Type 1: MSM SmartApps - Lite Plan" },
-            desc: { 
-              ES: "PWA Instalable + Asistente AI Closer + Captura de Leads + Tablero de Métricas en Vivo.", 
-              EN: "Installable PWA + AI Closer Assistant + Lead Capture + Live Metrics Dashboard.", 
-              PT: "PWA Instalável + Assistente AI Closer + Captura de Leads + Painel de Métricas ao Vivo." 
-            },
+            desc: { ES: "PWA Instalable + Asistente AI Closer + Captura de Leads + Tablero de Métricas en Vivo.", EN: "Installable PWA + AI Closer Assistant + Lead Capture + Live Metrics Dashboard.", PT: "PWA Instalável + Assistente AI Closer + Captura de Leads + Painel de Métricas." },
             setup: "$350.00 USD",
             monthly: "$30.00 USD/m",
             url: "https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-40502826TC114943LNLSKVRY"
           },
           {
-            id: "type2",
             name: { ES: "Type 2: MSM SmartApps - Growth Plan", EN: "Type 2: MSM SmartApps - Growth Plan", PT: "Type 2: MSM SmartApps - Growth Plan" },
-            desc: { 
-              ES: "Plan Lite + Motor de Prospección B2B/B2C Proactivo + Cero Gasto en Ads + Tablero de Métricas.", 
-              EN: "Lite Plan + Proactive B2B/B2C Prospecting Engine + Zero Ads Spend + Metrics Dashboard.", 
-              PT: "Plano Lite + Motor de Prospecção B2B/B2C Proativo + Zero Gasto em Ads + Painel de Métricas." 
-            },
+            desc: { ES: "Plan Lite + Motor de Prospección B2B/B2C Proactivo + Cero Gasto en Ads + Tablero de Métricas.", EN: "Lite Plan + Proactive B2B/B2C Prospecting Engine + Zero Ads Spend + Metrics Dashboard.", PT: "Plano Lite + Motor de Prospecção Proativo + Zero Gasto em Ads + Painel de Métricas." },
             setup: "$650.00 USD",
             monthly: "$50.00 USD/m",
             url: "https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-3YT07892A74193414NLSLGGQ"
           },
           {
-            id: "type3",
             name: { ES: "Type 3: MSM SmartApps - Enterprise Plan", EN: "Type 3: MSM SmartApps - Enterprise Plan", PT: "Type 3: MSM SmartApps - Enterprise Plan" },
-            desc: { 
-              ES: "Growth + Multilingüe (ES/EN/PT) + Equipo de Marketing IA Dedicado + Tablero de Métricas + Precios País.", 
-              EN: "Growth + Multilingual (ES/EN/PT) + Dedicated AI Marketing Team + Metrics Dashboard + Country Pricing.", 
-              PT: "Growth + Multilíngue (ES/EN/PT) + Equipe de Marketing IA Dedicada + Painel de Métricas + Precificação por País." 
-            },
+            desc: { ES: "Growth + Multilingüe (ES/EN/PT) + Equipo de Marketing IA Dedicado + Tablero de Métricas + Precios País.", EN: "Growth + Multilingual (ES/EN/PT) + Dedicated AI Marketing Team + Metrics Dashboard + Country Pricing.", PT: "Growth + Multilíngue (ES/EN/PT) + Equipe de Marketing IA + Painel de Métricas." },
             setup: "$990.00 USD",
             monthly: "$85.00 USD/m",
             url: "https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-8E5518670J990522VNLSLKZA"
           },
           {
-            id: "type4",
             name: { ES: "Type4: MSM SmartApps - Social-to-App", EN: "Type4: MSM SmartApps - Social-to-App", PT: "Type4: MSM SmartApps - Social-to-App" },
-            desc: { 
-              ES: "PWA para Negocios sin Web (Conversión desde Redes Sociales) + Equipo de Marketing IA de Respaldo.", 
-              EN: "PWA for Businesses Without a Website (Conversion from Social Networks) + AI Marketing Support.", 
-              PT: "PWA para Negócios sem Site (Conversão de Redes Sociais) + Suporte de Marketing IA." 
-            },
+            desc: { ES: "PWA para Negocios sin Web (Conversión desde Redes Sociales) + Equipo de Marketing IA de Respaldo.", EN: "PWA for Businesses Without a Website + AI Marketing Support.", PT: "PWA para Negócios sem Site + Suporte de Marketing IA." },
             setup: "$450.00 USD",
             monthly: "$35.00 USD/m",
             url: "https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-1DA88280NT531850WNLSLOMY"
           },
           {
-            id: "type5",
             name: { ES: "Type 5: MSM SmartApps - App Remake", EN: "Type 5: MSM SmartApps - App Remake", PT: "Type 5: MSM SmartApps - App Remake" },
-            desc: { 
-              ES: "Migración de Apps Obsoletas/Lentas a PWA IA High-Speed + Tablero de Métricas en Vivo.", 
-              EN: "Migration of Obsolete/Slow Apps to High-Speed AI PWA + Live Metrics Dashboard.", 
-              PT: "Migração de Apps Obsoletos/Lentos para PWA IA High-Speed + Painel de Métricas ao Vivo." 
-            },
+            desc: { ES: "Migración de Apps Obsoletas/Lentas a PWA IA High-Speed + Tablero de Métricas en Vivo.", EN: "Migration of Obsolete/Slow Apps to High-Speed AI PWA + Live Metrics Dashboard.", PT: "Migração de Apps Obsoletos/Lentos para PWA IA High-Speed + Painel de Métricas." },
             setup: "$750.00 USD",
             monthly: "$60.00 USD/m",
             url: "https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-6W388612D1928063PNLSLQQY"
@@ -206,7 +315,6 @@
         buttonText: "Paga con DaviPlata",
         plans: [
           {
-            id: "type1",
             name: { ES: "Tipo 1: MSM SmartApps - Lite Plan", EN: "Tipo 1: MSM SmartApps - Lite Plan", PT: "Tipo 1: MSM SmartApps - Lite Plan" },
             desc: { ES: "PWA Instalable + Asistente AI Closer + Captura de Leads + Tablero de Métricas en Vivo.", EN: "Installable PWA + AI Closer Assistant + Lead Capture + Live Metrics Dashboard.", PT: "PWA Instalável + Assistente AI Closer + Captura de Leads + Painel de Métricas." },
             setup: "$600.000 COP",
@@ -214,7 +322,6 @@
             url: "#daviplata-pay"
           },
           {
-            id: "type2",
             name: { ES: "Tipo 2: MSM SmartApps - Growth Plan", EN: "Tipo 2: MSM SmartApps - Growth Plan", PT: "Tipo 2: MSM SmartApps - Growth Plan" },
             desc: { ES: "Plan Lite + Motor de Prospección B2B/B2C Proactivo + Cero Gasto en Ads + Tablero de Métricas.", EN: "Lite Plan + Proactive B2B/B2C Prospecting Engine + Zero Ads Spend + Metrics Dashboard.", PT: "Plano Lite + Motor de Prospecção Proativo + Zero Gasto em Ads + Painel de Métricas." },
             setup: "$1.200.000 COP",
@@ -222,7 +329,6 @@
             url: "#daviplata-pay"
           },
           {
-            id: "type3",
             name: { ES: "Tipo 3: MSM Enterprise Plan", EN: "Tipo 3: MSM Enterprise Plan", PT: "Tipo 3: MSM Enterprise Plan" },
             desc: { ES: "Growth + Multilingüe (ES/EN/PT) + Equipo de Marketing IA Dedicado + Tablero de Métricas + Precios País.", EN: "Growth + Multilingual (ES/EN/PT) + Dedicated AI Marketing Team + Metrics Dashboard + Country Pricing.", PT: "Growth + Multilíngue (ES/EN/PT) + Equipe de Marketing IA + Painel de Métricas." },
             setup: "$1.850.000 COP",
@@ -230,7 +336,6 @@
             url: "#daviplata-pay"
           },
           {
-            id: "type4",
             name: { ES: "Tipo 4: Social-to-App", EN: "Tipo 4: Social-to-App", PT: "Tipo 4: Social-to-App" },
             desc: { ES: "PWA para Negocios sin Web (Conversión desde Redes Sociales) + Equipo de Marketing IA de Respaldo.", EN: "PWA for Businesses Without a Website + AI Marketing Support.", PT: "PWA para Negócios sem Site + Suporte de Marketing IA." },
             setup: "$600.000 COP",
@@ -238,7 +343,6 @@
             url: "#daviplata-pay"
           },
           {
-            id: "type5",
             name: { ES: "Tipo 5: App Remake", EN: "Tipo 5: App Remake", PT: "Tipo 5: App Remake" },
             desc: { ES: "Migración de Apps Obsoletas/Lentas a PWA IA High-Speed + Tablero de Métricas en Vivo.", EN: "Migration of Obsolete/Slow Apps to High-Speed AI PWA + Live Metrics Dashboard.", PT: "Migração de Apps Obsoletos/Lentos para PWA IA High-Speed + Painel de Métricas." },
             setup: "$1.200.000 COP",
@@ -266,10 +370,8 @@
             <p class="msm-plan-desc">${plan.desc[lang] || plan.desc["ES"]}</p>
           </div>
           <div>
-            <div class="msm-price-box">
-              <div class="msm-main-price">${plan.setup}</div>
-              <div class="msm-sub-price">Mantenimiento: ${plan.monthly}</div>
-            </div>
+            <div class="msm-main-price">${plan.setup}</div>
+            <div class="msm-sub-price">Mantenimiento: ${plan.monthly}</div>
             <a href="${plan.url}" class="msm-btn-pay" target="_blank">${currentGroup.buttonText}</a>
           </div>
         `;
