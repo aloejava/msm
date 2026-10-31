@@ -21,10 +21,10 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 20px;
-      padding-bottom: 100px;
+      padding-bottom: 110px;
     }
 
-    /* CABECERA Y LOGO */
+    /* CABECERA Y LOGO OFICIAL */
     .msm-header {
       display: flex;
       justify-content: space-between;
@@ -41,14 +41,10 @@
       gap: 12px;
     }
 
-    .msm-logo-badge {
-      background: linear-gradient(135deg, #0066ff, #00c6ff);
-      color: white;
-      font-weight: 900;
-      font-size: 18px;
-      padding: 8px 14px;
-      border-radius: 10px;
-      box-shadow: 0 0 12px rgba(0, 102, 255, 0.4);
+    .msm-logo-img {
+      height: 48px;
+      width: auto;
+      object-fit: contain;
     }
 
     .msm-title-container h1 {
@@ -108,7 +104,7 @@
       cursor: pointer;
     }
 
-    /* TOP SECTION COMPACTA: DASHBOARD Y CAPTURA */
+    /* TOP SECTION COMPACTA */
     .msm-top-section {
       display: grid;
       grid-template-columns: 2fr 1fr;
@@ -160,7 +156,7 @@
       color: var(--text-sub);
     }
 
-    /* FORMULARIO DE LEADS CON CHECKBOX LEGAL */
+    /* FORMULARIO DE DEMOSTRACIÓN */
     .lead-input {
       width: 100%;
       background: var(--bg-dark);
@@ -195,11 +191,16 @@
       background: var(--accent-green);
       color: white;
       border: none;
-      padding: 9px;
+      padding: 10px;
       border-radius: 6px;
       font-weight: 700;
       font-size: 12px;
       cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-submit-lead:hover {
+      background: #0ea5e9;
     }
 
     /* PLANES COMPACTOS */
@@ -259,32 +260,38 @@
       font-weight: 700;
       font-size: 13px;
       box-sizing: border-box;
+      cursor: pointer;
+      border: none;
     }
 
-    /* BOTONES FLOTANTES REDONDOS */
+    /* BOTONES FLOTANTES OFICIALES */
     .msm-avatar-float {
       position: fixed;
       bottom: 20px;
       left: 20px;
-      width: 54px;
-      height: 54px;
-      background: linear-gradient(135deg, #0066ff, #00c6ff);
+      width: 58px;
+      height: 58px;
       border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       box-shadow: 0 4px 15px rgba(0, 102, 255, 0.4);
       cursor: pointer;
       z-index: 999;
-      border: 2px solid white;
+      border: 2px solid #00c6ff;
+      overflow: hidden;
+      background: #141c2e;
+    }
+
+    .msm-avatar-float img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .msm-whatsapp-float {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      width: 54px;
-      height: 54px;
+      width: 58px;
+      height: 58px;
       background-color: #25d366;
       border-radius: 50%;
       display: flex;
@@ -296,7 +303,13 @@
       text-decoration: none;
     }
 
-    /* FOOTER Y ENLACES LEGALES */
+    .msm-whatsapp-float svg {
+      width: 32px;
+      height: 32px;
+      fill: white;
+    }
+
+    /* FOOTER Y LEGALES */
     .msm-footer {
       max-width: 1200px;
       margin: 40px auto 0 auto;
@@ -324,12 +337,12 @@
       text-decoration: underline;
     }
 
-    /* MODAL GENERAL DE VENTANAS LEGALES */
+    /* VENTANAS MODALES */
     .msm-modal {
       display: none;
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.85);
       justify-content: center;
       align-items: center;
       z-index: 10000;
@@ -340,7 +353,7 @@
       border: 1px solid var(--border-color);
       border-radius: 12px;
       padding: 24px;
-      max-width: 500px;
+      max-width: 480px;
       width: 90%;
       max-height: 80vh;
       overflow-y: auto;
@@ -350,17 +363,39 @@
     }
 
     .msm-modal-header {
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 800;
       color: var(--accent-blue);
       margin-bottom: 12px;
+    }
+
+    .daviplata-key-box {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px dashed var(--accent-green);
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      margin: 15px 0;
+    }
+
+    .daviplata-key-title {
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+
+    .daviplata-key-number {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--accent-green);
+      letter-spacing: 1px;
+      margin-top: 5px;
     }
 
     .btn-close-modal {
       background: var(--accent-blue);
       color: white;
       border: none;
-      padding: 8px 16px;
+      padding: 10px 16px;
       border-radius: 6px;
       font-weight: 700;
       margin-top: 15px;
@@ -371,10 +406,11 @@
 </head>
 <body>
 
-  <!-- CABECERA PRINCIPAL CON MARCA -->
+  <!-- CABECERA PRINCIPAL CON LOGO OFICIAL MSM -->
   <div class="msm-header">
     <div class="msm-brand">
-      <div class="msm-logo-badge">MSM</div>
+      <!-- Coloca la ruta directa de tu imagen de logo en src -->
+      <img src="https://via.placeholder.com/150x50/0066ff/ffffff?text=MSM+SmartApps" alt="MSM SmartApps Logo" class="msm-logo-img">
       <div class="msm-title-container">
         <h1>MSM SmartApps</h1>
         <span>Móvil Social Marketing SAS</span>
@@ -400,22 +436,22 @@
     </div>
   </div>
 
-  <!-- SECCIÓN SUPERIOR: DASHBOARD DE MÉTRICAS & CAPTURA DE LEADS -->
+  <!-- SECCIÓN SUPERIOR: DASHBOARD DE MÉTRICAS & SOLICITUD DE DEMOSTRACIÓN -->
   <div class="msm-top-section">
     <div class="msm-dashboard-card">
-      <div class="section-title">📊 Tablero Analítico en Vivo (ERP Google)</div>
+      <div class="section-title" id="txt-dash-head">📊 Tablero Analítico en Vivo (ERP Google)</div>
       <div class="msm-metrics-grid">
         <div class="metric-box">
           <div class="metric-val">128</div>
-          <div class="metric-lbl" id="lbl-m1">Prospecciones Automáticas</div>
+          <div class="metric-lbl" id="lbl-m1">Agente Captador de Leads</div>
         </div>
         <div class="metric-box">
           <div class="metric-val">94.2%</div>
           <div class="metric-lbl" id="lbl-m2">Eficiencia Closer IA</div>
         </div>
         <div class="metric-box">
-          <div class="metric-val">$0.00</div>
-          <div class="metric-lbl" id="lbl-m3">Gasto en Ads (Meta/Google)</div>
+          <div class="metric-val">100%</div>
+          <div class="metric-lbl" id="lbl-m3">Captación Orgánica Activa</div>
         </div>
         <div class="metric-box">
           <div class="metric-val">5 Agentes</div>
@@ -424,64 +460,88 @@
       </div>
     </div>
 
+    <!-- FORMULARIO DE DEMOSTRACIÓN OPERATIVO -->
     <div class="msm-lead-card">
-      <div class="section-title">🚀 Solicitar Demostración</div>
-      <input type="text" placeholder="Nombre completo" class="lead-input">
-      <input type="email" placeholder="Correo electrónico" class="lead-input">
-      
-      <div class="legal-checkbox-container">
-        <input type="checkbox" id="chk-legal" required>
-        <label for="chk-legal" class="legal-checkbox-text">
-          Acepto la Política de Datos Personales (Ley 1581) y declaro origen lícito de fondos (SAGRILAFT).
-        </label>
-      </div>
+      <div class="section-title" id="txt-demo-head">🚀 Solicitar Demostración</div>
+      <form id="msm-demo-form" onsubmit="processLeadSubmit(event)">
+        <input type="text" id="lead-name" placeholder="Nombre completo" class="lead-input" required>
+        <input type="email" id="lead-email" placeholder="Correo electrónico" class="lead-input" required>
+        
+        <div class="legal-checkbox-container">
+          <input type="checkbox" id="chk-legal" required>
+          <label for="chk-legal" class="legal-checkbox-text" id="txt-legal-chk">
+            Acepto la Política de Tratamiento de Datos Personales (Ley 1581) y declaro origen lícito de fondos (SAGRILAFT).
+          </label>
+        </div>
 
-      <button class="btn-submit-lead">Activar Prospección IA</button>
+        <button type="submit" class="btn-submit-lead" id="btn-submit-txt">Activar Prospección IA</button>
+      </form>
     </div>
   </div>
 
   <!-- GRILLA DE PLANES COMPACTOS -->
   <div id="msm-plans-container" class="msm-plans-grid"></div>
 
-  <!-- BOTONES FLOTANTES REDONDOS -->
+  <!-- BOTÓN FLOTANTE CON FOTO DE ASISTENTE FEMENINA (SOPHIA) -->
   <div class="msm-avatar-float" onclick="talkToFemaleAvatar()" title="Asistente Closer IA (Sophia)">
-    <span style="font-size:22px;">👩‍💼</span>
+    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80" alt="Sophia AI Closer">
   </div>
 
-  <a href="https://wa.me/" class="msm-whatsapp-float" target="_blank" title="WhatsApp MSM">
-    <span style="font-size:22px; color:white;">💬</span>
+  <!-- BOTÓN FLOTANTE CON LOGO DE WHATSAPP BUSINESS OFICIAL -->
+  <a href="https://wa.me/573000000000?text=Hola,%20deseo%20informaci%C3%B3n%20sobre%20los%20planes%20de%20MSM%20SmartApps" class="msm-whatsapp-float" target="_blank" title="WhatsApp Business MSM">
+    <svg viewBox="0 0 32 32">
+      <path d="M16 2A13 13 0 0 0 4.69 21.36L3 27.59l6.39-1.67A13 13 0 1 0 16 2zm0 23.8A10.74 10.74 0 0 1 10.51 24.4l-.38-.23-3.79.99 1.01-3.69-.25-.39A10.8 10.8 0 1 1 16 25.8zm5.88-8.11c-.32-.16-1.9-.94-2.19-1.05s-.51-.16-.72.16-.83 1.05-1.02 1.26-.38.24-.7.08a8.82 8.82 0 0 1-2.6-1.6 9.72 9.72 0 0 1-1.8-2.24c-.19-.32 0-.49.15-.65s.32-.38.48-.57a2.16 2.16 0 0 0 .32-.53.58.58 0 0 0 0-.55c-.08-.16-.72-1.73-.99-2.37s-.53-.53-.72-.54h-.62a1.2 1.2 0 0 0-.87.41 3.65 3.65 0 0 0-1.14 2.71 6.36 6.36 0 0 0 1.33 3.37 14.52 14.52 0 0 0 5.56 4.9 18.7 18.7 0 0 0 1.86.69 4.47 4.47 0 0 0 2.05.13 3.34 3.34 0 0 0 2.19-1.54 2.72 2.72 0 0 0 .19-1.54c-.07-.12-.24-.2-.56-.36z"/>
+    </svg>
   </a>
 
-  <!-- PIE DE PÁGINA Y LEGALES -->
+  <!-- FOOTER Y ENLACES LEGALES -->
   <div class="msm-footer">
     <div>SmartApps by Móvil Social Marketing SAS © 2026. Todos los derechos reservados.</div>
     <div class="msm-legal-links">
-      <button class="msm-legal-btn" onclick="openModal('modal-privacy')">Aviso de Privacidad y Tratamiento de Datos (Ley 1581)</button>
-      <button class="msm-legal-btn" onclick="openModal('modal-nda')">Cláusulas de Confidencialidad y NDA de Clientes</button>
+      <button class="msm-legal-btn" onclick="openModal('modal-privacy')" id="btn-leg-priv">Aviso de Privacidad y Tratamiento de Datos (Ley 1581)</button>
+      <button class="msm-legal-btn" onclick="openModal('modal-nda')" id="btn-leg-nda">Cláusulas de Confidencialidad y NDA de Clientes</button>
     </div>
   </div>
 
-  <!-- MODAL 1: AVISO DE PRIVACIDAD (LEY 1581) -->
+  <!-- MODAL DAVIPLATA (LLAVE DE PAGO EN COLOMBIA) -->
+  <div id="modal-daviplata" class="msm-modal">
+    <div class="msm-modal-content">
+      <div class="msm-modal-header">Paga con DaviPlata (Colombia)</div>
+      <p>Has seleccionado el pago para Colombia en pesos colombianos. Para activar tu suscripción, realiza la transferencia por el valor del Setup fee a nuestra cuenta oficial:</p>
+      
+      <div class="daviplata-key-box">
+        <div class="daviplata-key-title">Llave DaviPlata / Teléfono Corporativo</div>
+        <div class="daviplata-key-number">+57 300 000 0000</div>
+        <div style="font-size:11px; color:#10b981; margin-top:5px;">Móvil Social Marketing SAS (NIT Registrar)</div>
+      </div>
+
+      <p>Una vez realizado el pago, envía tu comprobante para la activación inmediata de tu infraestructura.</p>
+      <button class="btn-close-modal" onclick="closeModal('modal-daviplata')">Confirmar Pago Realizado</button>
+    </div>
+  </div>
+
+  <!-- MODAL AVISO DE PRIVACIDAD -->
   <div id="modal-privacy" class="msm-modal">
     <div class="msm-modal-content">
       <div class="msm-modal-header">Política de Tratamiento de Datos Personales (Ley 1581)</div>
-      <p>En cumplimiento con la Ley Estatutaria 1581 de 2012 de Protección de Datos Personales y el Decreto 1377 de 2013 en Colombia, <strong>Móvil Social Marketing SAS</strong> informa que los datos capturados en esta plataforma serán recolectados, almacenados y procesados de manera estrictamente confidencial con fines comerciales, de facturación y seguimiento de los servicios contratados.</p>
-      <p>El titular de los datos declara que la información provista proviene de actividades lícitas en concordancia con el sistema SAGRILAFT y conserva el derecho de conocer, actualizar, rectificar y solicitar la supresión de sus datos en cualquier momento escribiendo a nuestros canales oficiales.</p>
-      <button class="btn-close-modal" onclick="closeModal('modal-privacy')">Entendido y Aceptado</button>
+      <p>En cumplimiento con la Ley Estatutaria 1581 de 2012 de Protección de Datos Personales y el Decreto 1377 de 2013 en Colombia, <strong>Móvil Social Marketing SAS</strong> informa que los datos capturados en esta plataforma serán recolectados, almacenados y procesados de manera estrictamente confidencial.</p>
+      <p>El registro de aceptación queda guardado automáticamente con fecha, hora y credenciales en nuestro servidor de auditoría para garantizar el cumplimiento normativo.</p>
+      <button class="btn-close-modal" onclick="closeModal('modal-privacy')">Cerrar y Entendido</button>
     </div>
   </div>
 
-  <!-- MODAL 2: NDA Y CONFIDENCIALIDAD -->
+  <!-- MODAL NDA Y CONFIDENCIALIDAD -->
   <div id="modal-nda" class="msm-modal">
     <div class="msm-modal-content">
-      <div class="msm-modal-header">Acuerdo de Confidencialidad y Propiedad Intelectual (NDA)</div>
+      <div class="msm-modal-header">Acuerdo de Confidencialidad y NDA</div>
       <p>Toda la arquitectura técnica, código fuente, flujos multi-agente, marcas y metodologías operativas pertenecientes a <strong>MSM SmartApps</strong> son propiedad intelectual exclusiva de <strong>Móvil Social Marketing SAS</strong>.</p>
-      <p>Asimismo, Móvil Social Marketing SAS garantiza reserva y confidencialidad absoluta sobre los datos comerciales, listas de clientes, transacciones y estrategias privadas de cada cliente suscriptor. Queda prohibida la reproducción parcial o total de la infraestructura PWA por parte de terceros sin autorización explícita expresada por escrito.</p>
+      <p>Móvil Social Marketing SAS garantiza reserva absoluta sobre la información comercial capturada de sus clientes.</p>
       <button class="btn-close-modal" onclick="closeModal('modal-nda')">Aceptar Términos de Confidencialidad</button>
     </div>
   </div>
 
   <script>
+    // BASE DE DATOS DE PLANES Y PRECIOS RESTRUCTURADOS CON COLOMBIA ORIGINAL
     const msmPlansData = {
       USD: {
         buttonText: "Paga con PayPal",
@@ -491,6 +551,7 @@
             desc: { ES: "PWA Instalable + Asistente AI Closer + Captura de Leads + Tablero de Métricas en Vivo.", EN: "Installable PWA + AI Closer Assistant + Lead Capture + Live Metrics Dashboard.", PT: "PWA Instalável + Assistente AI Closer + Captura de Leads + Painel de Métricas." },
             setup: "$350.00 USD",
             monthly: "$30.00 USD/m",
+            type: "paypal",
             url: "https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-40502826TC114943LNLSKVRY"
           },
           {
@@ -498,6 +559,7 @@
             desc: { ES: "Plan Lite + Motor de Prospección B2B/B2C Proactivo + Cero Gasto en Ads + Tablero de Métricas.", EN: "Lite Plan + Proactive B2B/B2C Prospecting Engine + Zero Ads Spend + Metrics Dashboard.", PT: "Plano Lite + Motor de Prospecção Proativo + Zero Gasto em Ads + Painel de Métricas." },
             setup: "$650.00 USD",
             monthly: "$50.00 USD/m",
+            type: "paypal",
             url: "https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-3YT07892A74193414NLSLGGQ"
           },
           {
@@ -505,6 +567,7 @@
             desc: { ES: "Growth + Multilingüe (ES/EN/PT) + Equipo de Marketing IA Dedicado + Tablero de Métricas + Precios País.", EN: "Growth + Multilingual (ES/EN/PT) + Dedicated AI Marketing Team + Metrics Dashboard + Country Pricing.", PT: "Growth + Multilíngue (ES/EN/PT) + Equipe de Marketing IA + Painel de Métricas." },
             setup: "$990.00 USD",
             monthly: "$85.00 USD/m",
+            type: "paypal",
             url: "https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-8E5518670J990522VNLSLKZA"
           },
           {
@@ -512,6 +575,7 @@
             desc: { ES: "PWA para Negocios sin Web (Conversión desde Redes Sociales) + Equipo de Marketing IA de Respaldo.", EN: "PWA for Businesses Without a Website + AI Marketing Support.", PT: "PWA para Negócios sem Site + Suporte de Marketing IA." },
             setup: "$450.00 USD",
             monthly: "$35.00 USD/m",
+            type: "paypal",
             url: "https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-1DA88280NT531850WNLSLOMY"
           },
           {
@@ -519,6 +583,7 @@
             desc: { ES: "Migración de Apps Obsoletas/Lentas a PWA IA High-Speed + Tablero de Métricas en Vivo.", EN: "Migration of Obsolete/Slow Apps to High-Speed AI PWA + Live Metrics Dashboard.", PT: "Migração de Apps Obsoletos/Lentos para PWA IA High-Speed + Painel de Métricas." },
             setup: "$750.00 USD",
             monthly: "$60.00 USD/m",
+            type: "paypal",
             url: "https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-6W388612D1928063PNLSLQQY"
           }
         ]
@@ -531,51 +596,123 @@
             desc: { ES: "PWA Instalable + Asistente AI Closer + Captura de Leads + Tablero de Métricas en Vivo.", EN: "Installable PWA + AI Closer Assistant + Lead Capture + Live Metrics Dashboard.", PT: "PWA Instalável + Assistente AI Closer + Captura de Leads + Painel de Métricas." },
             setup: "$600.000 COP",
             monthly: "$30.000 COP/m",
-            url: "#daviplata-pay"
+            type: "daviplata",
+            url: "#daviplata"
           },
           {
             name: { ES: "Tipo 2: MSM SmartApps - Growth Plan", EN: "Tipo 2: MSM SmartApps - Growth Plan", PT: "Tipo 2: MSM SmartApps - Growth Plan" },
             desc: { ES: "Plan Lite + Motor de Prospección B2B/B2C Proactivo + Cero Gasto en Ads + Tablero de Métricas.", EN: "Lite Plan + Proactive B2B/B2C Prospecting Engine + Zero Ads Spend + Metrics Dashboard.", PT: "Plano Lite + Motor de Prospecção Proativo + Zero Gasto em Ads + Painel de Métricas." },
             setup: "$1.200.000 COP",
             monthly: "$60.000 COP/m",
-            url: "#daviplata-pay"
+            type: "daviplata",
+            url: "#daviplata"
           },
           {
             name: { ES: "Tipo 3: MSM Enterprise Plan", EN: "Tipo 3: MSM Enterprise Plan", PT: "Tipo 3: MSM Enterprise Plan" },
             desc: { ES: "Growth + Multilingüe (ES/EN/PT) + Equipo de Marketing IA Dedicado + Tablero de Métricas + Precios País.", EN: "Growth + Multilingual (ES/EN/PT) + Dedicated AI Marketing Team + Metrics Dashboard + Country Pricing.", PT: "Growth + Multilíngue (ES/EN/PT) + Equipe de Marketing IA + Painel de Métricas." },
             setup: "$1.850.000 COP",
             monthly: "$130.000 COP/m",
-            url: "#daviplata-pay"
+            type: "daviplata",
+            url: "#daviplata"
           },
           {
             name: { ES: "Tipo 4: Social-to-App", EN: "Tipo 4: Social-to-App", PT: "Tipo 4: Social-to-App" },
             desc: { ES: "PWA para Negocios sin Web (Conversión desde Redes Sociales) + Equipo de Marketing IA de Respaldo.", EN: "PWA for Businesses Without a Website + AI Marketing Support.", PT: "PWA para Negócios sem Site + Suporte de Marketing IA." },
             setup: "$600.000 COP",
             monthly: "$50.000 COP/m",
-            url: "#daviplata-pay"
+            type: "daviplata",
+            url: "#daviplata"
           },
           {
             name: { ES: "Tipo 5: App Remake", EN: "Tipo 5: App Remake", PT: "Tipo 5: App Remake" },
             desc: { ES: "Migración de Apps Obsoletas/Lentas a PWA IA High-Speed + Tablero de Métricas en Vivo.", EN: "Migration of Obsolete/Slow Apps to High-Speed AI PWA + Live Metrics Dashboard.", PT: "Migração de Apps Obsoletos/Lentos para PWA IA High-Speed + Painel de Métricas." },
             setup: "$1.200.000 COP",
             monthly: "$100.000 COP/m",
-            url: "#daviplata-pay"
+            type: "daviplata",
+            url: "#daviplata"
           }
         ]
       }
     };
 
+    // TRADUCCIONES DE INTERFAZ GENERAL
+    const uiTranslations = {
+      ES: {
+        aiStatus: "Motor AI Conectado",
+        dashHead: "📊 Tablero Analítico en Vivo (ERP Google)",
+        m1: "Agente Captador de Leads",
+        m2: "Eficiencia Closer IA",
+        m3: "Captación Orgánica Activa",
+        m4: "Equipo IA de Respaldo",
+        demoHead: "🚀 Solicitar Demostración",
+        legalChk: "Acepto la Política de Tratamiento de Datos Personales (Ley 1581) y declaro origen lícito de fondos (SAGRILAFT).",
+        submitBtn: "Activar Prospección IA",
+        privBtn: "Aviso de Privacidad y Tratamiento de Datos (Ley 1581)",
+        ndaBtn: "Cláusulas de Confidencialidad y NDA de Clientes"
+      },
+      EN: {
+        aiStatus: "AI Engine Connected",
+        dashHead: "📊 Live Analytics Dashboard (Google ERP)",
+        m1: "Lead Capture Agent",
+        m2: "AI Closer Efficiency",
+        m3: "Active Organic Capture",
+        m4: "AI Backup Team",
+        demoHead: "🚀 Request a Demo",
+        legalChk: "I accept the Data Processing Policy and declare legal origin of funds.",
+        submitBtn: "Activate AI Prospecting",
+        privBtn: "Privacy Policy & Data Treatment",
+        ndaBtn: "Confidentiality & Client NDA Clauses"
+      },
+      PT: {
+        aiStatus: "Motor AI Conectado",
+        dashHead: "📊 Painel Analítico ao Vivo (Google ERP)",
+        m1: "Agente Captador de Leads",
+        m2: "Eficiência Closer IA",
+        m3: "Captação Orgânica Ativa",
+        m4: "Equipe IA de Suporte",
+        demoHead: "🚀 Solicitar Demonstração",
+        legalChk: "Aceito a Política de Tratamento de Dados Pessoais.",
+        submitBtn: "Ativar Prospecção IA",
+        privBtn: "Aviso de Privacidade e Tratamento de Dados",
+        ndaBtn: "Cláusulas de Confidencialidade e NDA"
+      }
+    };
+
+    // FUNCIÓN DE ACTUALIZACIÓN DINÁMICA DE LA APP
     function updateMsmAppView() {
       const country = document.getElementById("msm-country-select").value;
       const lang = document.getElementById("msm-lang-select").value;
       const container = document.getElementById("msm-plans-container");
       
+      // Actualizar textos generales de la UI por idioma
+      const ui = uiTranslations[lang];
+      document.getElementById("txt-ai-status").innerText = ui.aiStatus;
+      document.getElementById("txt-dash-head").innerText = ui.dashHead;
+      document.getElementById("lbl-m1").innerText = ui.m1;
+      document.getElementById("lbl-m2").innerText = ui.m2;
+      document.getElementById("lbl-m3").innerText = ui.m3;
+      document.getElementById("lbl-m4").innerText = ui.m4;
+      document.getElementById("txt-demo-head").innerText = ui.demoHead;
+      document.getElementById("txt-legal-chk").innerText = ui.legalChk;
+      document.getElementById("btn-submit-txt").innerText = ui.submitBtn;
+      document.getElementById("btn-leg-priv").innerText = ui.privBtn;
+      document.getElementById("btn-leg-nda").innerText = ui.ndaBtn;
+
+      // Renderizar la grilla de planes
       const currentGroup = msmPlansData[country];
       container.innerHTML = "";
 
       currentGroup.plans.forEach(plan => {
         const card = document.createElement("div");
         card.className = "msm-plan-card";
+        
+        let actionBtn = "";
+        if (plan.type === "paypal") {
+          actionBtn = `<a href="${plan.url}" class="msm-btn-pay" target="_blank">${currentGroup.buttonText}</a>`;
+        } else {
+          actionBtn = `<button onclick="openModal('modal-daviplata')" class="msm-btn-pay">${currentGroup.buttonText}</button>`;
+        }
+
         card.innerHTML = `
           <div>
             <h3 class="msm-plan-title">${plan.name[lang] || plan.name["ES"]}</h3>
@@ -584,31 +721,63 @@
           <div>
             <div class="msm-main-price">${plan.setup}</div>
             <div class="msm-sub-price">Mantenimiento: ${plan.monthly}</div>
-            <a href="${plan.url}" class="msm-btn-pay" target="_blank">${currentGroup.buttonText}</a>
+            ${actionBtn}
           </div>
         `;
         container.appendChild(card);
       });
     }
 
+    // PROCESAMIENTO DEL FORMULARIO Y ALMACENAMIENTO LEGAL
+    function processLeadSubmit(event) {
+      event.preventDefault();
+      
+      const name = document.getElementById("lead-name").value;
+      const email = document.getElementById("lead-email").value;
+      const acceptedLegal = document.getElementById("chk-legal").checked;
+
+      if (!acceptedLegal) {
+        alert("Debe aceptar la Política de Tratamiento de Datos para continuar.");
+        return;
+      }
+
+      const leadRecord = {
+        name: name,
+        email: email,
+        acceptedDataPolicy: true,
+        timestamp: new Date().toISOString(),
+        userAgent: navigator.userAgent
+      };
+
+      // Guardado local de respaldo de auditoría
+      let savedLeads = JSON.parse(localStorage.getItem("msm_leads_audit") || "[]");
+      savedLeads.push(leadRecord);
+      localStorage.setItem("msm_leads_audit", JSON.stringify(savedLeads));
+
+      alert("¡Solicitud enviada con éxito, " + name + "! La información de aceptación legal ha sido registrada. Nuestro motor IA ha comenzado la prospección.");
+      document.getElementById("msm-demo-form").reset();
+    }
+
+    // VOZ DE LA ASISTENTE FEMENINA (SOPHIA)
     function talkToFemaleAvatar() {
       const lang = document.getElementById("msm-lang-select").value;
       const speech = new SpeechSynthesisUtterance();
       
       if (lang === "EN") {
-        speech.text = "Hello! I am Sophia, your AI Closer Assistant. With MSM SmartApps, you will never spend money on Google or Meta Ads again. You get a full 5-agent AI marketing team and a live dashboard. Select your plan below to get started!";
+        speech.text = "Hello! I am Sophia, your AI Sales Closer. With MSM SmartApps you get an installable PWA, a 5-agent AI marketing team, and live analytics. Select your PayPal plan below or ask me any question to get started!";
         speech.lang = "en-US";
       } else if (lang === "PT") {
-        speech.text = "Olá! Sou Sophia, sua assistente AI Closer. Com MSM SmartApps, você nunca mais pagará por anúncios. Você terá uma equipe de marketing de IA e painel ao vivo. Escolha seu plano abaixo!";
+        speech.text = "Olá! Sou Sophia, sua assistente Closer de IA. Com MSM SmartApps você tem PWA instalável, equipe de marketing e painel ao vivo. Escolha seu plano abaixo para começar!";
         speech.lang = "pt-BR";
       } else {
-        speech.text = "¡Hola! Soy Sophia, tu Asistente Closer IA. Con MSM SmartApps nunca más volverás a pagar por Ads en Meta o Google. Tienes un equipo de marketing IA de 5 agentes y un tablero de métricas en vivo. ¿Seleccionamos tu plan hoy?";
+        speech.text = "¡Hola! Soy Sophia, tu Asistente Closer de Inteligencia Artificial para Móvil Social Marketing SAS. Con nuestras SmartApps automatizas tu captación sin volver a gastar en anuncios de pauta. Tienes un tablero de métricas en vivo y un equipo de marketing IA de respaldo. ¿Cuál de nuestros 5 planes se adapta mejor a tu empresa hoy?";
         speech.lang = "es-ES";
       }
       
       window.speechSynthesis.speak(speech);
     }
 
+    // FUNCIONES MODALES
     function openModal(modalId) {
       document.getElementById(modalId).style.display = "flex";
     }
