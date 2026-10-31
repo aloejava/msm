@@ -1,318 +1,283 @@
 <!DOCTYPE html>
-<html lang="es" class="dark">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MSM SmartApps - Plataforma Web-to-App Inteligente</title>
-    <link rel="manifest" href="manifest.json">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Meta Pixel Code (Gratis) -->
-    <script>
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-        n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;s=b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t,s)}(window, document,'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', 'YOUR_PIXEL_ID');
-        fbq('track', 'PageView');
-    </script>
-    <style>
-        .glow-green { box-shadow: 0 0 12px rgba(34, 197, 94, 0.6); }
-        .glow-blue { box-shadow: 0 0 12px rgba(59, 130, 246, 0.6); }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MSM SmartApps - Móvil Social Marketing SAS</title>
+  <style>
+    :root {
+      --bg-dark: #0a0f1d;
+      --card-bg: #141c2e;
+      --accent-blue: #0066ff;
+      --text-main: #ffffff;
+      --text-sub: #94a3b8;
+      --border-color: #1e293b;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .msm-header-controls {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    .msm-select {
+      background-color: var(--card-bg);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .msm-plans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .msm-plan-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .msm-plan-card:hover {
+      border-color: var(--accent-blue);
+      transform: translateY(-3px);
+    }
+
+    .msm-plan-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent-blue);
+      margin-top: 0;
+      margin-bottom: 12px;
+    }
+
+    .msm-plan-desc {
+      font-size: 14px;
+      color: var(--text-sub);
+      line-height: 1.5;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+
+    .msm-price-box {
+      margin-bottom: 20px;
+    }
+
+    .msm-main-price {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .msm-sub-price {
+      font-size: 13px;
+      color: var(--text-sub);
+      margin-top: 4px;
+    }
+
+    .msm-btn-pay {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background-color: var(--accent-blue);
+      color: #ffffff;
+      text-decoration: none;
+      padding: 12px 0;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 15px;
+      transition: background-color 0.2s ease;
+      box-sizing: border-box;
+    }
+
+    .msm-btn-pay:hover {
+      background-color: #0052cc;
+    }
+  </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col justify-between pb-20">
+<body>
 
-    <!-- Header / Navbar Principal -->
-    <header class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur border-b border-slate-800 px-4 py-3 flex flex-wrap justify-between items-center gap-2">
-        <div class="flex items-center space-x-2">
-            <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-white">M</div>
-            <div>
-                <span class="font-extrabold text-base tracking-wide text-white">MSM <span class="text-blue-500">SmartApps</span></span>
-                <span class="text-[10px] text-slate-400 block -mt-1">Móvil Social Marketing SAS</span>
+  <!-- Controles Principales (País e Idioma) -->
+  <div class="msm-header-controls">
+    <select id="msm-country-select" class="msm-select" onchange="updateMsmAppView()">
+      <option value="COP">🇨🇴 Colombia (COP)</option>
+      <option value="USD" selected>🌐 Internacional (USD)</option>
+    </select>
+
+    <select id="msm-lang-select" class="msm-select" onchange="updateMsmAppView()">
+      <option value="ES">Español (ES)</option>
+      <option value="EN">English (EN)</option>
+      <option value="PT">Português (PT)</option>
+    </select>
+  </div>
+
+  <!-- Grilla de Planes Reales -->
+  <div id="msm-plans-container" class="msm-plans-grid"></div>
+
+  <script>
+    const msmPlansData = {
+      USD: {
+        buttonText: "Paga con PayPal",
+        plans: [
+          {
+            id: "type1",
+            name: { ES: "Type 1: MSM SmartApps - Lite Plan", EN: "Type 1: MSM SmartApps - Lite Plan", PT: "Type 1: MSM SmartApps - Lite Plan" },
+            desc: { 
+              ES: "PWA Instalable + Asistente AI Closer + Captura de Leads + Tablero de Métricas en Vivo.", 
+              EN: "Installable PWA + AI Closer Assistant + Lead Capture + Live Metrics Dashboard.", 
+              PT: "PWA Instalável + Assistente AI Closer + Captura de Leads + Painel de Métricas ao Vivo." 
+            },
+            setup: "$350.00 USD",
+            monthly: "$30.00 USD/m",
+            url: "https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-40502826TC114943LNLSKVRY"
+          },
+          {
+            id: "type2",
+            name: { ES: "Type 2: MSM SmartApps - Growth Plan", EN: "Type 2: MSM SmartApps - Growth Plan", PT: "Type 2: MSM SmartApps - Growth Plan" },
+            desc: { 
+              ES: "Plan Lite + Motor de Prospección B2B/B2C Proactivo + Cero Gasto en Ads + Tablero de Métricas.", 
+              EN: "Lite Plan + Proactive B2B/B2C Prospecting Engine + Zero Ads Spend + Metrics Dashboard.", 
+              PT: "Plano Lite + Motor de Prospecção B2B/B2C Proativo + Zero Gasto em Ads + Painel de Métricas." 
+            },
+            setup: "$650.00 USD",
+            monthly: "$50.00 USD/m",
+            url: "https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-3YT07892A74193414NLSLGGQ"
+          },
+          {
+            id: "type3",
+            name: { ES: "Type 3: MSM SmartApps - Enterprise Plan", EN: "Type 3: MSM SmartApps - Enterprise Plan", PT: "Type 3: MSM SmartApps - Enterprise Plan" },
+            desc: { 
+              ES: "Growth + Multilingüe (ES/EN/PT) + Equipo de Marketing IA Dedicado + Tablero de Métricas + Precios País.", 
+              EN: "Growth + Multilingual (ES/EN/PT) + Dedicated AI Marketing Team + Metrics Dashboard + Country Pricing.", 
+              PT: "Growth + Multilíngue (ES/EN/PT) + Equipe de Marketing IA Dedicada + Painel de Métricas + Precificação por País." 
+            },
+            setup: "$990.00 USD",
+            monthly: "$85.00 USD/m",
+            url: "https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-8E5518670J990522VNLSLKZA"
+          },
+          {
+            id: "type4",
+            name: { ES: "Type4: MSM SmartApps - Social-to-App", EN: "Type4: MSM SmartApps - Social-to-App", PT: "Type4: MSM SmartApps - Social-to-App" },
+            desc: { 
+              ES: "PWA para Negocios sin Web (Conversión desde Redes Sociales) + Equipo de Marketing IA de Respaldo.", 
+              EN: "PWA for Businesses Without a Website (Conversion from Social Networks) + AI Marketing Support.", 
+              PT: "PWA para Negócios sem Site (Conversão de Redes Sociais) + Suporte de Marketing IA." 
+            },
+            setup: "$450.00 USD",
+            monthly: "$35.00 USD/m",
+            url: "https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-1DA88280NT531850WNLSLOMY"
+          },
+          {
+            id: "type5",
+            name: { ES: "Type 5: MSM SmartApps - App Remake", EN: "Type 5: MSM SmartApps - App Remake", PT: "Type 5: MSM SmartApps - App Remake" },
+            desc: { 
+              ES: "Migración de Apps Obsoletas/Lentas a PWA IA High-Speed + Tablero de Métricas en Vivo.", 
+              EN: "Migration of Obsolete/Slow Apps to High-Speed AI PWA + Live Metrics Dashboard.", 
+              PT: "Migração de Apps Obsoletos/Lentos para PWA IA High-Speed + Painel de Métricas ao Vivo." 
+            },
+            setup: "$750.00 USD",
+            monthly: "$60.00 USD/m",
+            url: "https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-6W388612D1928063PNLSLQQY"
+          }
+        ]
+      },
+      COP: {
+        buttonText: "Paga con DaviPlata",
+        plans: [
+          {
+            id: "type1",
+            name: { ES: "Tipo 1: MSM SmartApps - Lite Plan", EN: "Tipo 1: MSM SmartApps - Lite Plan", PT: "Tipo 1: MSM SmartApps - Lite Plan" },
+            desc: { ES: "PWA Instalable + Asistente AI Closer + Captura de Leads + Tablero de Métricas en Vivo.", EN: "Installable PWA + AI Closer Assistant + Lead Capture + Live Metrics Dashboard.", PT: "PWA Instalável + Assistente AI Closer + Captura de Leads + Painel de Métricas." },
+            setup: "$600.000 COP",
+            monthly: "$30.000 COP/m",
+            url: "#daviplata-pay"
+          },
+          {
+            id: "type2",
+            name: { ES: "Tipo 2: MSM SmartApps - Growth Plan", EN: "Tipo 2: MSM SmartApps - Growth Plan", PT: "Tipo 2: MSM SmartApps - Growth Plan" },
+            desc: { ES: "Plan Lite + Motor de Prospección B2B/B2C Proactivo + Cero Gasto en Ads + Tablero de Métricas.", EN: "Lite Plan + Proactive B2B/B2C Prospecting Engine + Zero Ads Spend + Metrics Dashboard.", PT: "Plano Lite + Motor de Prospecção Proativo + Zero Gasto em Ads + Painel de Métricas." },
+            setup: "$1.200.000 COP",
+            monthly: "$60.000 COP/m",
+            url: "#daviplata-pay"
+          },
+          {
+            id: "type3",
+            name: { ES: "Tipo 3: MSM Enterprise Plan", EN: "Tipo 3: MSM Enterprise Plan", PT: "Tipo 3: MSM Enterprise Plan" },
+            desc: { ES: "Growth + Multilingüe (ES/EN/PT) + Equipo de Marketing IA Dedicado + Tablero de Métricas + Precios País.", EN: "Growth + Multilingual (ES/EN/PT) + Dedicated AI Marketing Team + Metrics Dashboard + Country Pricing.", PT: "Growth + Multilíngue (ES/EN/PT) + Equipe de Marketing IA + Painel de Métricas." },
+            setup: "$1.850.000 COP",
+            monthly: "$130.000 COP/m",
+            url: "#daviplata-pay"
+          },
+          {
+            id: "type4",
+            name: { ES: "Tipo 4: Social-to-App", EN: "Tipo 4: Social-to-App", PT: "Tipo 4: Social-to-App" },
+            desc: { ES: "PWA para Negocios sin Web (Conversión desde Redes Sociales) + Equipo de Marketing IA de Respaldo.", EN: "PWA for Businesses Without a Website + AI Marketing Support.", PT: "PWA para Negócios sem Site + Suporte de Marketing IA." },
+            setup: "$600.000 COP",
+            monthly: "$50.000 COP/m",
+            url: "#daviplata-pay"
+          },
+          {
+            id: "type5",
+            name: { ES: "Tipo 5: App Remake", EN: "Tipo 5: App Remake", PT: "Tipo 5: App Remake" },
+            desc: { ES: "Migración de Apps Obsoletas/Lentas a PWA IA High-Speed + Tablero de Métricas en Vivo.", EN: "Migration of Obsolete/Slow Apps to High-Speed AI PWA + Live Metrics Dashboard.", PT: "Migração de Apps Obsoletos/Lentos para PWA IA High-Speed + Painel de Métricas." },
+            setup: "$1.200.000 COP",
+            monthly: "$100.000 COP/m",
+            url: "#daviplata-pay"
+          }
+        ]
+      }
+    };
+
+    function updateMsmAppView() {
+      const country = document.getElementById("msm-country-select").value;
+      const lang = document.getElementById("msm-lang-select").value;
+      const container = document.getElementById("msm-plans-container");
+      
+      const currentGroup = msmPlansData[country];
+      container.innerHTML = "";
+
+      currentGroup.plans.forEach(plan => {
+        const card = document.createElement("div");
+        card.className = "msm-plan-card";
+        card.innerHTML = `
+          <div>
+            <h3 class="msm-plan-title">${plan.name[lang] || plan.name["ES"]}</h3>
+            <p class="msm-plan-desc">${plan.desc[lang] || plan.desc["ES"]}</p>
+          </div>
+          <div>
+            <div class="msm-price-box">
+              <div class="msm-main-price">${plan.setup}</div>
+              <div class="msm-sub-price">Mantenimiento: ${plan.monthly}</div>
             </div>
-        </div>
-        
-        <div class="flex items-center space-x-2">
-            <!-- Disparador con Punto Verde Titilando (Efecto Venta) -->
-            <span class="flex items-center gap-1.5 text-[11px] bg-slate-800 border border-slate-700 px-2.5 py-1 rounded-full text-slate-300">
-                <span class="w-2 h-2 bg-green-500 rounded-full animate-ping"></span>
-                <span class="font-semibold text-green-400">Motor AI Conectado</span>
-            </span>
+            <a href="${plan.url}" class="msm-btn-pay" target="_blank">${currentGroup.buttonText}</a>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
 
-            <select id="countrySelect" onchange="updateView()" class="bg-slate-800 border border-slate-700 text-xs rounded-lg p-1.5 text-white outline-none">
-                <option value="CO">🇨🇴 Colombia (COP)</option>
-                <option value="LATAM">🇲🇽 LatAm / México (USD)</option>
-                <option value="US">🇺🇸 EE.UU. / Europa (USD)</option>
-            </select>
-
-            <select id="langSelect" onchange="updateView()" class="bg-slate-800 border border-slate-700 text-xs rounded-lg p-1.5 text-white outline-none">
-                <option value="es">ES</option>
-                <option value="en">EN</option>
-                <option value="pt">PT</option>
-            </select>
-        </div>
-    </header>
-
-    <!-- Barra de Navegación por Pestañas (Evita Scroll Infinito) -->
-    <nav class="bg-slate-900/50 border-b border-slate-800 px-4 py-2 flex justify-around text-xs font-semibold">
-        <button onclick="switchTab('tabPlanes')" id="btnTabPlanes" class="text-blue-400 border-b-2 border-blue-500 pb-1">Planes & Soluciones</button>
-        <button onclick="switchTab('tabMetrics')" id="btnTabMetrics" class="text-slate-400 hover:text-white pb-1">Métricas & Analítica</button>
-        <button onclick="switchTab('tabAgentes')" id="btnTabAgentes" class="text-slate-400 hover:text-white pb-1">Equipo Agentes IA</button>
-    </nav>
-
-    <!-- Contenido Principal -->
-    <main class="max-w-5xl mx-auto p-4 w-full space-y-6">
-
-        <!-- PESTAÑA 1: PLANES Y TIPOS COLAPSABLES -->
-        <section id="tabPlanes" class="space-y-4">
-            <div class="text-center space-y-1">
-                <h1 id="txtHeroTitle" class="text-xl md:text-3xl font-extrabold">Planes & Tipos de soluciones PWA</h1>
-                <p id="txtHeroSub" class="text-xs text-slate-400">Automatización total para convertir visitantes en clientes</p>
-            </div>
-
-            <div id="plansContainer" class="space-y-3">
-                <!-- Se puebla dinámicamente con las tarjetas desplegables -->
-            </div>
-        </section>
-
-        <!-- PESTAÑA 2: TABLERO DE MÉTRICAS INTERACTIVO -->
-        <section id="tabMetrics" class="hidden space-y-4">
-            <div class="flex justify-between items-center">
-                <h2 class="font-bold text-base text-white">Tablero de Analítica In-App</h2>
-                <button onclick="loadMetrics()" class="text-xs text-blue-400 bg-slate-800 px-2 py-1 rounded border border-slate-700"><i class="fa-solid fa-rotate mr-1"></i> Actualizar</button>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                <div onclick="openMetricDetail('installs')" class="bg-slate-900 border border-slate-800 p-3 rounded-xl text-center cursor-pointer hover:border-blue-500 transition">
-                    <p class="text-[10px] text-slate-400">Instalaciones PWA</p>
-                    <p class="text-xl font-bold text-blue-400">1,248</p>
-                    <span class="text-[9px] text-green-400">+18% este mes</span>
-                </div>
-                <div onclick="openMetricDetail('leads')" class="bg-slate-900 border border-slate-800 p-3 rounded-xl text-center cursor-pointer hover:border-blue-500 transition">
-                    <p class="text-[10px] text-slate-400">Leads Captados</p>
-                    <p class="text-xl font-bold text-green-400">342</p>
-                    <span class="text-[9px] text-green-400">+12% este mes</span>
-                </div>
-                <div onclick="openMetricDetail('voice')" class="bg-slate-900 border border-slate-800 p-3 rounded-xl text-center cursor-pointer hover:border-blue-500 transition">
-                    <p class="text-[10px] text-slate-400">Consultas de Voz</p>
-                    <p class="text-xl font-bold text-purple-400">3,890</p>
-                    <span class="text-[9px] text-green-400">+24% este mes</span>
-                </div>
-                <div onclick="openMetricDetail('conv')" class="bg-slate-900 border border-slate-800 p-3 rounded-xl text-center cursor-pointer hover:border-blue-500 transition">
-                    <p class="text-[10px] text-slate-400">Tasa Conversión</p>
-                    <p class="text-xl font-bold text-yellow-400">8.4%</p>
-                    <span class="text-[9px] text-green-400">Promedio LatAm</span>
-                </div>
-            </div>
-
-            <!-- Gráfico de Tendencia -->
-            <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl">
-                <h3 class="text-xs font-bold text-slate-300 mb-2">Tráfico & Conversión PWA (Últimos 30 días)</h3>
-                <div class="h-48">
-                    <canvas id="chartMetrics"></canvas>
-                </div>
-            </div>
-        </section>
-
-        <!-- PESTAÑA 3: EQUIPO DE AGENTES EN ACCIÓN -->
-        <section id="tabAgentes" class="hidden space-y-4">
-            <h2 class="font-bold text-base text-white">Equipo de Agentes de Marketing (Python + IA)</h2>
-            <div class="space-y-3">
-                <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl flex items-center justify-between">
-                    <div class="flex items-center space-x-3">
-                        <i class="fa-solid fa-magnifying-glass text-blue-500 text-lg"></i>
-                        <div>
-                            <p class="text-xs font-bold">Agente Scraper B2B (Python)</p>
-                            <p class="text-[10px] text-slate-400">Rastreando anuncios en Google Ads & LinkedIn</p>
-                        </div>
-                    </div>
-                    <span class="text-[10px] bg-green-500/10 text-green-400 border border-green-500/20 px-2 py-0.5 rounded-full">Activo</span>
-                </div>
-                <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl flex items-center justify-between">
-                    <div class="flex items-center space-x-3">
-                        <i class="fa-solid fa-paper-plane text-purple-500 text-lg"></i>
-                        <div>
-                            <p class="text-xs font-bold">Agente Outreach Automatizado</p>
-                            <p class="text-[10px] text-slate-400">Enviando propuestas precargadas a prospectos</p>
-                        </div>
-                    </div>
-                    <span class="text-[10px] bg-green-500/10 text-green-400 border border-green-500/20 px-2 py-0.5 rounded-full">Ejecutando</span>
-                </div>
-                <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl flex items-center justify-between">
-                    <div class="flex items-center space-x-3">
-                        <i class="fa-solid fa-user-check text-green-500 text-lg"></i>
-                        <div>
-                            <p class="text-xs font-bold">Agente Closer & Cualificador</p>
-                            <p class="text-[10px] text-slate-400">Entrevistando visitantes en la PWA y filtrando leads</p>
-                        </div>
-                    </div>
-                    <span class="text-[10px] bg-green-500/10 text-green-400 border border-green-500/20 px-2 py-0.5 rounded-full">En Vivo</span>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- WIDGETS FLOTANTES DISRUPTIVOS -->
-    <div class="fixed bottom-4 right-4 z-50 flex flex-col items-center space-y-2">
-        <!-- Widget 1: Asistente & Closer IA MSM -->
-        <button onclick="toggleCloserModal()" class="w-12 h-12 bg-gradient-to-r from-pink-600 to-purple-600 rounded-full flex items-center justify-center glow-blue transition transform hover:scale-110 relative">
-            <i class="fa-solid fa-robot text-white text-lg"></i>
-            <span class="absolute -top-6 bg-pink-600 text-[9px] px-2 py-0.5 rounded-full font-bold text-white shadow">Closer IA</span>
-        </button>
-
-        <!-- Widget 2: WhatsApp Business Directo con Contexto -->
-        <a href="https://wa.me/573024894043?text=Hola,%20vengo%20desde%20la%20PWA%20de%20MSM%20SmartApps%20y%20me%20interesa%20cotizar%20un%20plan." target="_blank" class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center glow-green transition transform hover:scale-110 relative">
-            <i class="fa-brands fa-whatsapp text-white text-2xl"></i>
-            <span class="absolute -top-6 bg-green-600 text-[9px] px-2 py-0.5 rounded-full font-bold text-white shadow">WhatsApp</span>
-        </a>
-    </div>
-
-    <!-- Modal de Asistente Closer IA -->
-    <div id="closerModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-700 rounded-2xl p-5 max-w-sm w-full space-y-4">
-            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                <h3 class="font-bold text-sm text-pink-400 flex items-center gap-2"><i class="fa-solid fa-robot"></i> Asistente & Closer MSM</h3>
-                <button onclick="toggleCloserModal()" class="text-slate-400"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div class="text-xs text-slate-300 space-y-2">
-                <p class="bg-slate-800 p-2.5 rounded-lg border border-slate-700">"¡Hola! Soy el Asistente Comercial de MSM SmartApps. Resolvemos tus dudas de implementación PWA e IA. ¿Deseas activar la demo de 7 días para tu empresa?"</p>
-            </div>
-            <button onclick="speakCloser()" class="w-full bg-pink-600 hover:bg-pink-500 text-white font-bold py-2 rounded-xl text-xs flex items-center justify-center gap-2">
-                <i class="fa-solid fa-volume-high"></i> Escuchar Explicación de Valor
-            </button>
-        </div>
-    </div>
-
-    <!-- Modal de Pago DaviPlata (Colombia) -->
-    <div id="daviplataModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-700 rounded-2xl p-5 max-w-sm w-full space-y-4 text-center">
-            <h3 class="font-bold text-base text-green-400">Pago Directo en Colombia</h3>
-            <p class="text-xs text-slate-300">Transfiere sin comisiones a nuestra cuenta oficial:</p>
-            <div class="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-1">
-                <p class="text-[10px] text-slate-400">Llave DaviPlata / Bre-B:</p>
-                <p class="text-base font-bold font-mono text-green-400">DAVI3024894043</p>
-                <p class="text-[10px] text-slate-400">Titular: Móvil Social Marketing SAS</p>
-            </div>
-            <button onclick="navigator.clipboard.writeText('DAVI3024894043'); alert('Llave copiada');" class="w-full bg-blue-600 text-xs font-bold py-2 rounded-xl">Copiar Llave</button>
-            <button onclick="document.getElementById('daviplataModal').classList.add('hidden')" class="w-full bg-slate-800 text-xs py-1.5 rounded-xl">Cerrar</button>
-        </div>
-    </div>
-
-    <!-- Banner Legal: Habeas Data + SAGRILAFT -->
-    <div id="legalBanner" class="fixed bottom-0 inset-x-0 bg-slate-950/95 border-t border-slate-800 p-3 z-40 flex justify-between items-center text-[10px] text-slate-300">
-        <p>Acepto la Política de Datos Personales (Ley 1581) y declaro origen lícito de fondos (SAGRILAFT).</p>
-        <button onclick="document.getElementById('legalBanner').remove()" class="bg-blue-600 text-white font-bold px-3 py-1 rounded-lg text-[10px]">Aceptar</button>
-    </div>
-
-    <footer class="text-center text-[11px] text-slate-500 py-4 border-t border-slate-800">
-        MSM SmartApps by Móvil Social Marketing SAS
-    </footer>
-
-    <script>
-        // Datos de Planes Traducidos y Adaptados por País
-        const dataPlans = {
-            CO: [
-                { id: 1, type: "Tipo 1: MSM Lite", setup: "$450.000 COP", monthly: "$40.000 COP/m", desc: "PWA Instalable + Asistente Closer IA + Captador Leads", paypal: "https://paypal.me/movilsocialmarketing/150" },
-                { id: 2, type: "Tipo 2: MSM Growth", setup: "$950.000 COP", monthly: "$80.000 COP/m", desc: "Lite + Agente Scraper/Outreach Python en Redes", paypal: "https://paypal.me/movilsocialmarketing/290" },
-                { id: 3, type: "Tipo 3: MSM Enterprise", setup: "$1.850.000 COP", monthly: "$130.000 COP/m", desc: "Growth + Multilingüe (ES/EN/PT) + Precios País", paypal: "https://paypal.me/movilsocialmarketing/490" },
-                { id: 4, type: "Tipo 4: Social-to-App", setup: "$600.000 COP", monthly: "$50.000 COP/m", desc: "Para Negocios sin Web (Conversión desde IG/FB/TikTok)", paypal: "https://paypal.me/movilsocialmarketing/190" },
-                { id: 5, type: "Tipo 5: App Remake", setup: "$1.200.000 COP", monthly: "$100.000 COP/m", desc: "Migración de Apps Obsoletas/Lentas a PWA IA High-Speed", paypal: "https://paypal.me/movilsocialmarketing/350" }
-            ],
-            LATAM: [
-                { id: 1, type: "Tipo 1: MSM Lite", setup: "$150 USD", monthly: "$15 USD/m", desc: "PWA Instalable + Asistente Closer IA", paypal: "https://paypal.me/movilsocialmarketing/150" },
-                { id: 2, type: "Tipo 2: MSM Growth", setup: "$290 USD", monthly: "$25 USD/m", desc: "Lite + Agente Scraper Python", paypal: "https://paypal.me/movilsocialmarketing/290" },
-                { id: 3, type: "Tipo 3: MSM Enterprise", setup: "$490 USD", monthly: "$45 USD/m", desc: "Growth + Multilingüe + Precios País", paypal: "https://paypal.me/movilsocialmarketing/490" },
-                { id: 4, type: "Tipo 4: Social-to-App", setup: "$190 USD", monthly: "$20 USD/m", desc: "PWA para Negocios sin Web", paypal: "https://paypal.me/movilsocialmarketing/190" },
-                { id: 5, type: "Tipo 5: App Remake", setup: "$350 USD", monthly: "$30 USD/m", desc: "Migración de Apps Obsoletas", paypal: "https://paypal.me/movilsocialmarketing/350" }
-            ],
-            US: [
-                { id: 1, type: "Tipo 1: MSM Lite", setup: "$350 USD", monthly: "$30 USD/m", desc: "PWA Instalable + Asistente Closer IA", paypal: "https://paypal.me/movilsocialmarketing/350" },
-                { id: 2, type: "Tipo 2: MSM Growth", setup: "$650 USD", monthly: "$50 USD/m", desc: "Lite + Agente Scraper Python", paypal: "https://paypal.me/movilsocialmarketing/650" },
-                { id: 3, type: "Tipo 3: MSM Enterprise", setup: "$990 USD", monthly: "$85 USD/m", desc: "Growth + Multilingüe + Precios País", paypal: "https://paypal.me/movilsocialmarketing/990" },
-                { id: 4, type: "Tipo 4: Social-to-App", setup: "$450 USD", monthly: "$35 USD/m", desc: "PWA para Negocios sin Web", paypal: "https://paypal.me/movilsocialmarketing/450" },
-                { id: 5, type: "Tipo 5: App Remake", setup: "$750 USD", monthly: "$60 USD/m", desc: "Migración de Apps Obsoletas", paypal: "https://paypal.me/movilsocialmarketing/750" }
-            ]
-        };
-
-        const i18n = {
-            es: { title: "Planes & Tipos de soluciones PWA", sub: "Automatización total para convertir visitantes en clientes" },
-            en: { title: "PWA Plans & Smart Solutions", sub: "Full automation to convert visitors into customers" },
-            pt: { title: "Planos e Soluções PWA Inteligentes", sub: "Automação total para converter visitantes em clientes" }
-        };
-
-        function switchTab(tabId) {
-            ['tabPlanes', 'tabMetrics', 'tabAgentes'].forEach(id => document.getElementById(id).classList.add('hidden'));
-            document.getElementById(tabId).classList.remove('hidden');
-            if(tabId === 'tabMetrics') initChart();
-        }
-
-        function updateView() {
-            const country = document.getElementById("countrySelect").value;
-            const lang = document.getElementById("langSelect").value;
-            
-            document.getElementById("txtHeroTitle").innerText = i18n[lang].title;
-            document.getElementById("txtHeroSub").innerText = i18n[lang].sub;
-
-            const container = document.getElementById("plansContainer");
-            const plans = dataPlans[country];
-
-            container.innerHTML = plans.map(p => `
-                <div class="bg-slate-900 border border-slate-800 rounded-xl p-3.5 space-y-2">
-                    <div class="flex justify-between items-center cursor-pointer" onclick="togglePlanDetail(${p.id})">
-                        <div>
-                            <h3 class="font-bold text-sm text-blue-400">${p.type}</h3>
-                            <p class="text-[11px] text-slate-400">${p.desc}</p>
-                        </div>
-                        <div class="text-right">
-                            <span class="font-extrabold text-sm text-white">${p.setup}</span>
-                            <span class="text-[9px] block text-slate-400">${p.monthly}</span>
-                        </div>
-                    </div>
-                    <div id="planDetail-${p.id}" class="pt-2 border-t border-slate-800 flex gap-2">
-                        ${country === 'CO' 
-                            ? `<button onclick="document.getElementById('daviplataModal').classList.remove('hidden')" class="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-1.5 rounded-lg text-xs">Pagar con DaviPlata</button>`
-                            : `<a href="${p.paypal}" target="_blank" class="w-full text-center bg-blue-600 hover:bg-blue-500 text-white font-bold py-1.5 rounded-lg text-xs block">Pagar con PayPal</a>`
-                        }
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function toggleCloserModal() {
-            document.getElementById("closerModal").classList.toggle("hidden");
-        }
-
-        function speakCloser() {
-            const synth = window.speechSynthesis;
-            const utter = new SpeechSynthesisUtterance("En MSM SmartApps te entregamos una PWA de alta velocidad con agentes de inteligencia artificial listos para vender 24 horas al día. Activa tu plan hoy.");
-            utter.lang = document.getElementById("langSelect").value === 'en' ? 'en-US' : 'es-ES';
-            synth.speak(utter);
-        }
-
-        function initChart() {
-            const ctx = document.getElementById('chartMetrics').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4'],
-                    datasets: [
-                        { label: 'Instalaciones', data: [200, 450, 800, 1248], borderColor: '#3b82f6', tension: 0.3 },
-                        { label: 'Leads Captados', data: [50, 120, 230, 342], borderColor: '#22c55e', tension: 0.3 }
-                    ]
-                },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#94a3b8', font: { size: 10 } } } } }
-            });
-        }
-
-        updateView();
-    </script>
+    document.addEventListener("DOMContentLoaded", updateMsmAppView);
+  </script>
 </body>
 </html>
