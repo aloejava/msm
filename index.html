@@ -21,10 +21,10 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 20px;
-      padding-bottom: 90px; /* Espacio para no obstruir con controles flotantes */
+      padding-bottom: 100px;
     }
 
-    /* BARRA SUPERIOR E INDICADOR IA */
+    /* CABECERA Y LOGO */
     .msm-header {
       display: flex;
       justify-content: space-between;
@@ -35,6 +35,35 @@
       gap: 15px;
     }
 
+    .msm-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .msm-logo-badge {
+      background: linear-gradient(135deg, #0066ff, #00c6ff);
+      color: white;
+      font-weight: 900;
+      font-size: 18px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0, 102, 255, 0.4);
+    }
+
+    .msm-title-container h1 {
+      font-size: 18px;
+      margin: 0;
+      color: var(--text-main);
+      font-weight: 800;
+    }
+
+    .msm-title-container span {
+      font-size: 11px;
+      color: var(--text-sub);
+      display: block;
+    }
+
     .msm-status-ai {
       display: flex;
       align-items: center;
@@ -43,7 +72,7 @@
       border: 1px solid rgba(16, 185, 129, 0.3);
       padding: 6px 12px;
       border-radius: 20px;
-      font-size: 13px;
+      font-size: 12px;
       color: var(--accent-green);
       font-weight: 600;
     }
@@ -58,18 +87,9 @@
     }
 
     @keyframes pulse {
-      0% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-      }
-      70% {
-        transform: scale(1);
-        box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
-      }
-      100% {
-        transform: scale(0.95);
-        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
-      }
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
     }
 
     .msm-controls {
@@ -88,57 +108,105 @@
       cursor: pointer;
     }
 
-    /* TABLERO DE MÉTRICAS (ERP DASHBOARD INTEGRADO) */
-    .msm-dashboard {
+    /* TOP SECTION COMPACTA: DASHBOARD Y CAPTURA */
+    .msm-top-section {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
       max-width: 1200px;
-      margin: 0 auto 30px auto;
+      margin: 0 auto 25px auto;
+    }
+
+    @media (max-width: 900px) {
+      .msm-top-section { grid-template-columns: 1fr; }
+    }
+
+    .msm-dashboard-card, .msm-lead-card {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 12px;
-      padding: 20px;
+      padding: 18px;
     }
 
-    .msm-dashboard-title {
-      font-size: 16px;
+    .section-title {
+      font-size: 14px;
       font-weight: 700;
       margin-top: 0;
-      margin-bottom: 15px;
+      margin-bottom: 12px;
       color: var(--text-main);
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
 
     .msm-metrics-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 15px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
     }
 
-    .metric-card {
-      background: rgba(255, 255, 255, 0.03);
+    .metric-box {
+      background: rgba(255, 255, 255, 0.02);
       border: 1px solid var(--border-color);
       border-radius: 8px;
-      padding: 15px;
+      padding: 10px;
     }
 
-    .metric-value {
-      font-size: 22px;
+    .metric-val {
+      font-size: 18px;
       font-weight: 800;
       color: var(--accent-blue);
     }
 
-    .metric-label {
-      font-size: 12px;
+    .metric-lbl {
+      font-size: 11px;
       color: var(--text-sub);
-      margin-top: 4px;
     }
 
-    /* GRILLA DE PLANES */
+    /* FORMULARIO DE LEADS CON CHECKBOX LEGAL */
+    .lead-input {
+      width: 100%;
+      background: var(--bg-dark);
+      border: 1px solid var(--border-color);
+      color: white;
+      padding: 8px 10px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      font-size: 12px;
+      box-sizing: border-box;
+    }
+
+    .legal-checkbox-container {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .legal-checkbox-container input {
+      margin-top: 2px;
+    }
+
+    .legal-checkbox-text {
+      font-size: 10px;
+      color: var(--text-sub);
+      line-height: 1.3;
+    }
+
+    .btn-submit-lead {
+      width: 100%;
+      background: var(--accent-green);
+      color: white;
+      border: none;
+      padding: 9px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    /* PLANES COMPACTOS */
     .msm-plans-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
       max-width: 1200px;
       margin: 0 auto;
     }
@@ -147,36 +215,36 @@
       background-color: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 12px;
-      padding: 24px;
+      padding: 16px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
 
     .msm-plan-title {
-      font-size: 18px;
+      font-size: 15px;
       font-weight: 700;
       color: var(--accent-blue);
       margin-top: 0;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
 
     .msm-plan-desc {
-      font-size: 14px;
+      font-size: 12px;
       color: var(--text-sub);
-      line-height: 1.5;
-      margin-bottom: 20px;
+      line-height: 1.4;
+      margin-bottom: 12px;
     }
 
     .msm-main-price {
-      font-size: 24px;
+      font-size: 18px;
       font-weight: 800;
     }
 
     .msm-sub-price {
-      font-size: 13px;
+      font-size: 11px;
       color: var(--text-sub);
-      margin-bottom: 15px;
+      margin-bottom: 12px;
     }
 
     .msm-btn-pay {
@@ -186,37 +254,133 @@
       background-color: var(--accent-blue);
       color: #ffffff;
       text-decoration: none;
-      padding: 12px 0;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 15px;
+      padding: 9px 0;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 13px;
       box-sizing: border-box;
     }
 
-    /* BOTÓN FLOTANTE DE WHATSAPP (CORREGIDO SIN SUPERPOSICIÓN) */
+    /* BOTONES FLOTANTES REDONDOS */
+    .msm-avatar-float {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      width: 54px;
+      height: 54px;
+      background: linear-gradient(135deg, #0066ff, #00c6ff);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 15px rgba(0, 102, 255, 0.4);
+      cursor: pointer;
+      z-index: 999;
+      border: 2px solid white;
+    }
+
     .msm-whatsapp-float {
       position: fixed;
       bottom: 20px;
       right: 20px;
+      width: 54px;
+      height: 54px;
       background-color: #25d366;
-      color: white;
-      border-radius: 50px;
-      padding: 10px 18px;
+      border-radius: 50%;
       display: flex;
+      justify-content: center;
       align-items: center;
-      gap: 8px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 13px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
       z-index: 999;
+      border: 2px solid white;
+      text-decoration: none;
+    }
+
+    /* FOOTER Y ENLACES LEGALES */
+    .msm-footer {
+      max-width: 1200px;
+      margin: 40px auto 0 auto;
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-sub);
+      border-top: 1px solid var(--border-color);
+      padding-top: 20px;
+    }
+
+    .msm-legal-links {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .msm-legal-btn {
+      color: var(--accent-blue);
+      background: none;
+      border: none;
+      font-size: 11px;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    /* MODAL GENERAL DE VENTANAS LEGALES */
+    .msm-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+    }
+
+    .msm-modal-content {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      max-width: 500px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      color: var(--text-main);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .msm-modal-header {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--accent-blue);
+      margin-bottom: 12px;
+    }
+
+    .btn-close-modal {
+      background: var(--accent-blue);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 700;
+      margin-top: 15px;
+      cursor: pointer;
+      width: 100%;
     }
   </style>
 </head>
 <body>
 
-  <!-- CABECERA PRINCIPAL CON ESTADO TITILANTE -->
+  <!-- CABECERA PRINCIPAL CON MARCA -->
   <div class="msm-header">
+    <div class="msm-brand">
+      <div class="msm-logo-badge">MSM</div>
+      <div class="msm-title-container">
+        <h1>MSM SmartApps</h1>
+        <span>Móvil Social Marketing SAS</span>
+      </div>
+    </div>
+
     <div class="msm-status-ai">
       <span class="pulse-dot"></span>
       <span id="txt-ai-status">Motor AI Conectado</span>
@@ -236,38 +400,86 @@
     </div>
   </div>
 
-  <!-- TABLERO DE MÉTRICAS (ERP EN TIEMPO REAL) -->
-  <div class="msm-dashboard">
-    <div class="msm-dashboard-title">
-      📊 <span id="txt-dash-title">Tablero Analítico MSM (Métricas en Vivo)</span>
+  <!-- SECCIÓN SUPERIOR: DASHBOARD DE MÉTRICAS & CAPTURA DE LEADS -->
+  <div class="msm-top-section">
+    <div class="msm-dashboard-card">
+      <div class="section-title">📊 Tablero Analítico en Vivo (ERP Google)</div>
+      <div class="msm-metrics-grid">
+        <div class="metric-box">
+          <div class="metric-val">128</div>
+          <div class="metric-lbl" id="lbl-m1">Prospecciones Automáticas</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-val">94.2%</div>
+          <div class="metric-lbl" id="lbl-m2">Eficiencia Closer IA</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-val">$0.00</div>
+          <div class="metric-lbl" id="lbl-m3">Gasto en Ads (Meta/Google)</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-val">5 Agentes</div>
+          <div class="metric-lbl" id="lbl-m4">Equipo IA de Respaldo</div>
+        </div>
+      </div>
     </div>
-    <div class="msm-metrics-grid">
-      <div class="metric-card">
-        <div class="metric-value" id="val-leads">128</div>
-        <div class="metric-label" id="lbl-leads">Prospecciones Automáticas</div>
+
+    <div class="msm-lead-card">
+      <div class="section-title">🚀 Solicitar Demostración</div>
+      <input type="text" placeholder="Nombre completo" class="lead-input">
+      <input type="email" placeholder="Correo electrónico" class="lead-input">
+      
+      <div class="legal-checkbox-container">
+        <input type="checkbox" id="chk-legal" required>
+        <label for="chk-legal" class="legal-checkbox-text">
+          Acepto la Política de Datos Personales (Ley 1581) y declaro origen lícito de fondos (SAGRILAFT).
+        </label>
       </div>
-      <div class="metric-card">
-        <div class="metric-value" id="val-conv">94.2%</div>
-        <div class="metric-label" id="lbl-conv">Eficiencia AI Closer</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-value" id="val-ads">$0.00</div>
-        <div class="metric-label" id="lbl-ads">Gasto en Ads (Meta/Google)</div>
-      </div>
-      <div class="metric-card">
-        <div class="metric-value" id="val-mkt">5 Agentes</div>
-        <div class="metric-label" id="lbl-mkt">Equipo IA de Respaldo</div>
-      </div>
+
+      <button class="btn-submit-lead">Activar Prospección IA</button>
     </div>
   </div>
 
-  <!-- CONTAINER DE PLANES -->
+  <!-- GRILLA DE PLANES COMPACTOS -->
   <div id="msm-plans-container" class="msm-plans-grid"></div>
 
-  <!-- BOTÓN WHATSAPP UBICADO LIMPIAMENTE -->
-  <a href="https://wa.me/" class="msm-whatsapp-float" target="_blank">
-    <span>WhatsApp MSM</span>
+  <!-- BOTONES FLOTANTES REDONDOS -->
+  <div class="msm-avatar-float" onclick="talkToFemaleAvatar()" title="Asistente Closer IA (Sophia)">
+    <span style="font-size:22px;">👩‍💼</span>
+  </div>
+
+  <a href="https://wa.me/" class="msm-whatsapp-float" target="_blank" title="WhatsApp MSM">
+    <span style="font-size:22px; color:white;">💬</span>
   </a>
+
+  <!-- PIE DE PÁGINA Y LEGALES -->
+  <div class="msm-footer">
+    <div>SmartApps by Móvil Social Marketing SAS © 2026. Todos los derechos reservados.</div>
+    <div class="msm-legal-links">
+      <button class="msm-legal-btn" onclick="openModal('modal-privacy')">Aviso de Privacidad y Tratamiento de Datos (Ley 1581)</button>
+      <button class="msm-legal-btn" onclick="openModal('modal-nda')">Cláusulas de Confidencialidad y NDA de Clientes</button>
+    </div>
+  </div>
+
+  <!-- MODAL 1: AVISO DE PRIVACIDAD (LEY 1581) -->
+  <div id="modal-privacy" class="msm-modal">
+    <div class="msm-modal-content">
+      <div class="msm-modal-header">Política de Tratamiento de Datos Personales (Ley 1581)</div>
+      <p>En cumplimiento con la Ley Estatutaria 1581 de 2012 de Protección de Datos Personales y el Decreto 1377 de 2013 en Colombia, <strong>Móvil Social Marketing SAS</strong> informa que los datos capturados en esta plataforma serán recolectados, almacenados y procesados de manera estrictamente confidencial con fines comerciales, de facturación y seguimiento de los servicios contratados.</p>
+      <p>El titular de los datos declara que la información provista proviene de actividades lícitas en concordancia con el sistema SAGRILAFT y conserva el derecho de conocer, actualizar, rectificar y solicitar la supresión de sus datos en cualquier momento escribiendo a nuestros canales oficiales.</p>
+      <button class="btn-close-modal" onclick="closeModal('modal-privacy')">Entendido y Aceptado</button>
+    </div>
+  </div>
+
+  <!-- MODAL 2: NDA Y CONFIDENCIALIDAD -->
+  <div id="modal-nda" class="msm-modal">
+    <div class="msm-modal-content">
+      <div class="msm-modal-header">Acuerdo de Confidencialidad y Propiedad Intelectual (NDA)</div>
+      <p>Toda la arquitectura técnica, código fuente, flujos multi-agente, marcas y metodologías operativas pertenecientes a <strong>MSM SmartApps</strong> son propiedad intelectual exclusiva de <strong>Móvil Social Marketing SAS</strong>.</p>
+      <p>Asimismo, Móvil Social Marketing SAS garantiza reserva y confidencialidad absoluta sobre los datos comerciales, listas de clientes, transacciones y estrategias privadas de cada cliente suscriptor. Queda prohibida la reproducción parcial o total de la infraestructura PWA por parte de terceros sin autorización explícita expresada por escrito.</p>
+      <button class="btn-close-modal" onclick="closeModal('modal-nda')">Aceptar Términos de Confidencialidad</button>
+    </div>
+  </div>
 
   <script>
     const msmPlansData = {
@@ -377,6 +589,32 @@
         `;
         container.appendChild(card);
       });
+    }
+
+    function talkToFemaleAvatar() {
+      const lang = document.getElementById("msm-lang-select").value;
+      const speech = new SpeechSynthesisUtterance();
+      
+      if (lang === "EN") {
+        speech.text = "Hello! I am Sophia, your AI Closer Assistant. With MSM SmartApps, you will never spend money on Google or Meta Ads again. You get a full 5-agent AI marketing team and a live dashboard. Select your plan below to get started!";
+        speech.lang = "en-US";
+      } else if (lang === "PT") {
+        speech.text = "Olá! Sou Sophia, sua assistente AI Closer. Com MSM SmartApps, você nunca mais pagará por anúncios. Você terá uma equipe de marketing de IA e painel ao vivo. Escolha seu plano abaixo!";
+        speech.lang = "pt-BR";
+      } else {
+        speech.text = "¡Hola! Soy Sophia, tu Asistente Closer IA. Con MSM SmartApps nunca más volverás a pagar por Ads en Meta o Google. Tienes un equipo de marketing IA de 5 agentes y un tablero de métricas en vivo. ¿Seleccionamos tu plan hoy?";
+        speech.lang = "es-ES";
+      }
+      
+      window.speechSynthesis.speak(speech);
+    }
+
+    function openModal(modalId) {
+      document.getElementById(modalId).style.display = "flex";
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = "none";
     }
 
     document.addEventListener("DOMContentLoaded", updateMsmAppView);
